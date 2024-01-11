@@ -7,9 +7,24 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <DockPanel>
-        <StatusBar DockPanel.Dock="Bottom" Height="20">
+        <StatusBar DockPanel.Dock="Bottom" Height="25">
+            <StatusBar.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="300" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                    </Grid>
+                </ItemsPanelTemplate>
+            </StatusBar.ItemsPanel>
             <StatusBarItem>
                 <TextBlock Name="StatusText"></TextBlock>
+            </StatusBarItem>
+            <Separator Grid.Column="1" />
+            <StatusBarItem Grid.Column="2">
+                <ProgressBar Name="ProgressBar" Height="20" Width="485"></ProgressBar>
             </StatusBarItem>
         </StatusBar>
         <Grid Margin="10, 10, 10, 10">
@@ -37,6 +52,7 @@
             <Slider Name="StepsSlider"
                 Grid.Column="1" Grid.Row="3"
                 Minimum="1" Maximum="60"
+                Value="20"    
                 ValueChanged="StepsSlider_Changed"
                 IsSnapToTickEnabled="True" TickFrequency="1"
                 VerticalAlignment="Center">
@@ -48,7 +64,7 @@
                 IsSnapToTickEnabled="True" TickFrequency="1"
                 VerticalAlignment="Center">
             </Slider>
-            <Grid Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2">
+            <Grid Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Margin="0, 0, 1, 0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="195"/>
                     <ColumnDefinition Width="195"/>
