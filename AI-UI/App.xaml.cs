@@ -13,5 +13,6 @@ namespace AI_UI
     /// </summary>
     public partial class App : Application
     {
+        
     }
 }
