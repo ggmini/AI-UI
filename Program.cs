@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace Data_Structure
@@ -28,7 +28,21 @@ namespace Data_Structure
 
         private ImgNode start = null;
         private int countNodeId = 0;
-        private ImgNode currentNode = null;// set via onClick
+        private ImgNode currentNode = null;
+
+        public List<ImgNode> nodeList = new List<ImgNode>();
+
+        public ImgNode SelectNode(int pos)// set via onClick
+        {
+            if (currentNode != null && pos >= 0 && pos < nodeList.Count)
+            {
+                currentNode = nodeList[pos];
+                return currentNode;
+            }
+
+            return null;
+        }
+
 
         public void InsertItem(string PromptInfo, int Id)
         {
@@ -38,6 +52,7 @@ namespace Data_Structure
             if (start == null)
             {
                 ImgNode newNode = new ImgNode(countNodeId++);
+                nodeList.Add(newNode);
                 start = newNode;
                 currentNode = newNode;
                 currentNode.promptInfoOfNode = PromptInfo;
@@ -50,6 +65,7 @@ namespace Data_Structure
             else
             {
                 ImgNode newNode = new ImgNode(countNodeId++) { promptInfoOfNode = PromptInfo };
+                nodeList.Add(newNode);
                 currentNode.children.Add(newNode);
 
                 currentNode = newNode;
@@ -98,7 +114,8 @@ namespace Data_Structure
             it.InsertItem("Bär", 2);
             it.InsertItem("Bär", 3);
             it.InsertItem("Bär fotorealistisch", 4);
-            it.InsertItem("Bär isst Fisch", 5);
+            it.SelectNode(0);
+            it.InsertItem("Bär", 5);
             it.InsertItem("Bär isst Fisch", 6);
             it.InsertItem("Gans", 7);
 
