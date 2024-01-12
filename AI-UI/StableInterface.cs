@@ -27,6 +27,8 @@ namespace  AI_UI{
             public int width { get; set; }
             public int height { get; set; }
             public int batch_size { get; set; }
+            public string[] init_images { get; set; }
+            public double denoising_strength { get; set; }
         }
 
         public struct responseStruct {
@@ -71,7 +73,7 @@ namespace  AI_UI{
         /// <param name="batch_size">How many images should be generated</param>
         /// <param name="width">Image width in pixels</param>
         /// <param name="height">Image height in pixels</param>
-        public static void Generate(string prompt, string negativePrompt, int seed, int steps, int batch_size, int width, int height) {
+        public static void GenerateTxt2Img(string prompt, string negativePrompt, int seed, int steps, int batch_size, int width, int height) {
             requestStruct requestStruct = new() {
                 prompt = prompt,
                 negative_prompt = negativePrompt,
@@ -80,6 +82,35 @@ namespace  AI_UI{
                 batch_size = batch_size,
                 width = width,
                 height = height
+            };
+
+            BackgroundWorker worker = new BackgroundWorker();
+            worker.DoWork += GenerateWork;
+            worker.RunWorkerAsync(requestStruct);
+        }
+
+        /// <summary>
+        /// Generate new Image using img2img
+        /// </summary>
+        /// <param name="prompt">Prompt</param>
+        /// <param name="negativePrompt">Negative Prompt</param>
+        /// <param name="seed">Seed to be used (-1 for random)</param>
+        /// <param name="steps">How many Steps should be generated</param>
+        /// <param name="batch_size">How many images should be generated</param>
+        /// <param name="width">Image width in pixels</param>
+        /// <param name="height">Image height in pixels</param>
+        /// <param name="images">Collection of input images</param>
+        public static void GenerateImg2Img(string prompt, string negativePrompt, int seed, int steps, int batch_size, int width, int height, string[] images) {
+            requestStruct requestStruct = new() {
+                prompt = prompt,
+                negative_prompt = negativePrompt,
+                seed = seed,
+                steps = steps,
+                batch_size = batch_size,
+                width = width,
+                height = height,
+                init_images = images,
+                denoising_strength = 0.75 //Copied from the API's Example Request
             };
 
             BackgroundWorker worker = new BackgroundWorker();

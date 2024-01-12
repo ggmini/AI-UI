@@ -30,7 +30,11 @@ namespace AI_UI
         public void SaveLog() {
             string filePath = $"log\\{DateTime.Now.ToString("dd.MM.yyyy hh-mm-ss")}.txt";
             Directory.CreateDirectory("log");
-            File.WriteAllBytes(filePath, Convert.FromBase64String(LogBlock.Text));
+            using (StreamWriter writer = new StreamWriter(filePath)) {
+                writer.Write(LogBlock.Text);
+                writer.Close();
+            }
+            
         }
 
     }

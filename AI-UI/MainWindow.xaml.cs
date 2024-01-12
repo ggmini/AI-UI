@@ -9,6 +9,7 @@ namespace AI_UI {
         
         //Reference to Loggin Window
         LogWindow log;
+        public LogWindow Log { get => log; }
 
         public MainWindow() {
             InitializeComponent();
@@ -21,6 +22,11 @@ namespace AI_UI {
             StableInterface.Initialize(this, log);
 
             ChangeStatusMessage("Ready...");
+        }
+
+        void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)  { 
+            log.SaveLog();
+            log.Close();
         }
 
         /// <summary>
@@ -43,7 +49,7 @@ namespace AI_UI {
         void Generate_Click(object sender, RoutedEventArgs e) {
             GenerateButton.IsEnabled = false;
 
-            StableInterface.Generate(PromptBox.Text, NegativePromptBox.Text, Convert.ToInt32(SeedBox.Text), (int)StepsSlider.Value, (int)BatchSizeSlider.Value,
+            StableInterface.GenerateTxt2Img(PromptBox.Text, NegativePromptBox.Text, Convert.ToInt32(SeedBox.Text), (int)StepsSlider.Value, (int)BatchSizeSlider.Value,
                 Convert.ToInt32(WidthBox.Text), Convert.ToInt32(HeightBox.Text));
         }
 
