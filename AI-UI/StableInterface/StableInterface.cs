@@ -1,6 +1,4 @@
 ﻿using System.ComponentModel;
-using System.Diagnostics;
-using System.IO;
 using System;
 using System.Net.Http;
 using System.Net.Http.Json;
@@ -8,8 +6,8 @@ using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Unicode;
 using System.Threading;
-using System.Windows.Threading;
 using System.Windows;
+using Data_Structure;
 
 namespace  AI_UI{
     public static class StableInterface {
@@ -19,32 +17,15 @@ namespace  AI_UI{
         static State status = State.Inactive;
         public static State Status { get => status; }
 
-        public struct requestStruct {
-            public string prompt { get; set; }
-            public string negative_prompt { get; set; }
-            public int seed { get; set; }
-            public int steps { get; set; }
-            public int width { get; set; }
-            public int height { get; set; }
-            public int batch_size { get; set; }
-            public string[] init_images { get; set; }
-            public double denoising_strength { get; set; }
-        }
-
-        public struct responseStruct {
-            public string[] images { get; set; }
-        }
-
-        public struct progressStruct {
-            public double progress { get; set; }
-        }
-
         //Our Http Client to access the Automatic1111 API
         static HttpClient client;
 
         // References to other Windows
         static MainWindow _main;
         static LogWindow _log;
+
+        //url for the sdapi
+        static string url = "http://127.0.0.1:7860/sdapi/v1/";
 
         /// <summary>
         /// Initializes the Stable Diffusion Interface
@@ -74,7 +55,7 @@ namespace  AI_UI{
         /// <param name="width">Image width in pixels</param>
         /// <param name="height">Image height in pixels</param>
         public static void GenerateTxt2Img(string prompt, string negativePrompt, int seed, int steps, int batch_size, int width, int height) {
-            requestStruct requestStruct = new() {
+            RequestStruct requestStruct = new() {
                 prompt = prompt,
                 negative_prompt = negativePrompt,
                 seed = seed,
@@ -101,7 +82,7 @@ namespace  AI_UI{
         /// <param name="height">Image height in pixels</param>
         /// <param name="images">Collection of input images</param>
         public static void GenerateImg2Img(string prompt, string negativePrompt, int seed, int steps, int batch_size, int width, int height, string[] images) {
-            requestStruct requestStruct = new() {
+            RequestStruct requestStruct = new() {
                 prompt = prompt,
                 negative_prompt = negativePrompt,
                 seed = seed,
@@ -122,50 +103,53 @@ namespace  AI_UI{
         /// Background Worker to Generate Image
         /// </summary>
         static async void GenerateWork(object sender, DoWorkEventArgs e) {
+            //Set State active
             status = State.Active;
 
-            requestStruct requestStruct = (requestStruct)e.Argument;
+            RequestStruct requestStruct = (RequestStruct)e.Argument;
 
+            //Serialize the Request
             var jsonOptions = new JsonSerializerOptions() {
                 WriteIndented = true,
                 Encoder = JavaScriptEncoder.Create(UnicodeRanges.All)
             };
             JsonContent requestBody = JsonContent.Create(requestStruct, requestStruct.GetType(), options: jsonOptions);
 
+            //Start Progress Observer
             Thread t = new Thread(() => ProgressObserver());
             t.Start();
 
-            Application.Current.Dispatcher.Invoke(() => _log.WriteToLog("Sending Txt2Img Request"));
+            string command;
+            //Decide if txt2img or img2img request is to be sent
+            if (requestStruct.init_images == null)
+                command = "txt2img";
+            else command = "img2img";
+
+            //Send Post Request to Generate Image
+            Application.Current.Dispatcher.Invoke(() => _log.WriteToLog($"Sending {command} Request"));
             await Application.Current.Dispatcher.InvokeAsync(async () => _log.WriteToLog(await requestBody.ReadAsStringAsync())); ;
-            var result = await client.PostAsync("http://127.0.0.1:7860/sdapi/v1/txt2img", requestBody);
+            var result = await client.PostAsync(url + command, requestBody);
+
+            //Show Server Response
             Application.Current.Dispatcher.Invoke(() => _log.WriteToLog("Request Finished with " + (int)result.StatusCode + " " + result.StatusCode));
             Application.Current.Dispatcher.Invoke(() => _main.ChangeStatusMessage("Generation Completed"));
-            Console.WriteLine(result.ReasonPhrase);
+            if(result.ReasonPhrase != null) Application.Current.Dispatcher.Invoke(() => _log.WriteToLog(result.ReasonPhrase));
+
+            //Deserialize Response
             string responseBody = await result.Content.ReadAsStringAsync();
+            ResponseStruct response = JsonSerializer.Deserialize<ResponseStruct>(responseBody);
+            ResponseStruct.batchImgInfo batchInfo = response.ExtractImgInfo();
 
-            responseStruct response = JsonSerializer.Deserialize<responseStruct>(responseBody);
-
+            //Save Images
+            Application.Current.Dispatcher.Invoke(() => _log.WriteToLog("Saving images"));
             if (response.images != null)
-                SaveImage(response.images);
-            else MessageBox.Show("Error", "No Images Found in Response");
+                ImgTree.SaveBatch(response.images, batchInfo, response.imgInfos);
+            else MessageBox.Show("Error", "No Images Found in Response!\nCheck the log.");
 
+            //Set State to inactive
             status = State.Inactive;
             Application.Current.Dispatcher.Invoke(() => _main.ChangeStatusMessage("Ready"));
             Application.Current.Dispatcher.Invoke(() => _main.GenerateButton.IsEnabled = true);
-        }
-
-        /// <summary>
-        /// Save the Generated Images
-        /// </summary>
-        /// <param name="base64string">Collection of images as Base64 String</param>
-        static void SaveImage(string[] base64string) {
-            string filePath = $"output\\" + DateTime.Now.ToString("dd.MM.yyyy hh-mm-ss") + "\\";
-            Application.Current.Dispatcher.Invoke(() => _log.WriteToLog("Saving images to " + filePath));
-            Directory.CreateDirectory(filePath);
-            int i = 0;
-            foreach (var image in base64string)
-                File.WriteAllBytes(filePath + i++ + ".png", Convert.FromBase64String(image));
-            Process.Start("explorer.exe", filePath);
         }
 
         /// <summary>
@@ -189,7 +173,7 @@ namespace  AI_UI{
                 var response = await client.GetAsync("http://127.0.0.1:7860/sdapi/v1/progress");
                 string responseString = await response.Content.ReadAsStringAsync();
                 //Dispatcher.Invoke(() => log.WriteToLog("Progress Response Received: " + responseString));
-                progressStruct progressStruct = JsonSerializer.Deserialize<progressStruct>(responseString);
+                ProgressStruct progressStruct = JsonSerializer.Deserialize<ProgressStruct>(responseString);
                 double progressInPercent = progressStruct.progress * 100;
                 Application.Current.Dispatcher.Invoke(() => _log.WriteToLog("Progress Response Received: " + progressInPercent.ToString()));
                 Application.Current.Dispatcher.Invoke(() => _main.ChangeStatusMessage($"Progress: {progressInPercent.ToString("0.##")}%"));
