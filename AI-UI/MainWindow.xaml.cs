@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System;
+using Data_Structure;
 
 namespace AI_UI {
     /// <summary>
@@ -18,13 +19,16 @@ namespace AI_UI {
             log = new();
             log.Show();
 
+            Controller.SetLog(log);
+
             //Initialize Stable Diffusion Interface
-            StableInterface.Initialize(this, log);
+            StableInterface.Initialize(this);
 
             ChangeStatusMessage("Ready...");
         }
 
-        void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)  { 
+        void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
+            ImgTree.SaveTree();
             log.SaveLog();
             log.Close();
         }

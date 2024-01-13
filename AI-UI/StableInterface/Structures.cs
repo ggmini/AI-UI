@@ -21,7 +21,7 @@ namespace AI_UI {
         public struct imgInfo {
             public string prompt { get; set; }
             public string negative_prompt { get; set; }
-            public int seed { get; set; }
+            public long seed { get; set; }
             public int steps { get; set; }
             public int width { get; set; }
             public int height { get; set; }
@@ -31,7 +31,7 @@ namespace AI_UI {
         public struct batchImgInfo {
             public string prompt { get; set; }
             public string negative_prompt { get; set; }
-            public int[] seed { get; set; }
+            public long[] all_seeds { get; set; }
             public int steps { get; set; }
             public int width { get; set; }
             public int height { get; set; }
@@ -48,7 +48,7 @@ namespace AI_UI {
                 {
                     prompt = batchInfo.prompt,
                     negative_prompt = batchInfo.negative_prompt,
-                    seed = batchInfo.seed[i],
+                    seed = batchInfo.all_seeds[i],
                     steps = batchInfo.steps,
                     width = batchInfo.width,
                     height = batchInfo.height,

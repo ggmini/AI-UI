@@ -1,4 +1,6 @@
 ﻿using Data_Structure;
+using Microsoft.Win32;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -6,7 +8,7 @@ namespace AI_UI {
     /// <summary>
     /// Interaction logic for Startup_Window.xaml
     /// </summary>
-    public partial class Startup_Window : Window {
+    public partial class StartupWindow : Window {
 
         //Grids used by this Window
         Grid NewOrLoadGrid;
@@ -16,9 +18,11 @@ namespace AI_UI {
         TextBox inputBox;
         Button confirmButton;
 
-        public Startup_Window() {
+        public StartupWindow() {
             InitializeComponent();
             GenerateGrids();
+
+            MainGrid.Children.Add(NewOrLoadGrid);
         }
 
         /// <summary>
@@ -32,7 +36,16 @@ namespace AI_UI {
         /// Let User Select Tree to Load
         /// </summary>
         void LoadTree(object sender, RoutedEventArgs e) {
+            //Let User Select File
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.ShowDialog();
+            ImgTree.LoadTree(File.OpenText(ofd.FileName)); //Open File and Pass Stream Reader to ImgTree
 
+            //Open MainWindow
+            MainWindow main = new();
+            main.Show();
+            App.Current.MainWindow = main;
+            Close();
         }
 
         /// <summary>
@@ -68,6 +81,7 @@ namespace AI_UI {
             NewOrLoadGrid = new();
             ColumnDefinition column = new();
             NewOrLoadGrid.ColumnDefinitions.Add(column);
+            column = new();
             NewOrLoadGrid.ColumnDefinitions.Add(column);
 
             Button NewButton = new() {
@@ -92,12 +106,13 @@ namespace AI_UI {
             #region NewGrid
             NewGrid = new() { Margin = new Thickness(10, 10, 10, 10) };
             RowDefinition row = new();
-            NewOrLoadGrid.RowDefinitions.Add(row);
-            NewOrLoadGrid.RowDefinitions.Add(row);
+            NewGrid.RowDefinitions.Add(row);
+            row = new();
+            NewGrid.RowDefinitions.Add(row);
 
             inputBox = new();
             inputBox.TextChanged += NameChanged;
-            NewOrLoadGrid.Children.Add(inputBox);
+            NewGrid.Children.Add(inputBox);
             Grid.SetRow(inputBox, 0);
 
             confirmButton = new() {
@@ -119,8 +134,8 @@ namespace AI_UI {
             };
             BackButton.Click += BackToNewOrLoad;
 
-            NewOrLoadGrid.Children.Add(confirmButton);
-            NewOrLoadGrid.Children.Add(BackButton);
+            NewGrid.Children.Add(confirmButton);
+            NewGrid.Children.Add(BackButton);
             Grid.SetRow(confirmButton, 1);
             Grid.SetRow(BackButton, 1);
             #endregion

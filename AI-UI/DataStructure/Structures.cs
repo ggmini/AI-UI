@@ -4,10 +4,10 @@
         public string negative_prompt { get; set; }
         public int width { get; set; }
         public int height { get; set; }
-        public string nodeInfo { get; set; }
     }
 
     public struct NodeStruct {
+        public int nodeId { get; set; }
         public string nodeInfo { get; set; }
         public int[] imgIds { get; set; }
         public int[] childrenIds { get; set; }

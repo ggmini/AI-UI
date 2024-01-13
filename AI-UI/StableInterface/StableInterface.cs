@@ -22,7 +22,6 @@ namespace  AI_UI{
 
         // References to other Windows
         static MainWindow _main;
-        static LogWindow _log;
 
         //url for the sdapi
         static string url = "http://127.0.0.1:7860/sdapi/v1/";
@@ -32,16 +31,15 @@ namespace  AI_UI{
         /// </summary>
         /// <param name="main">Current Main Window</param>
         /// <param name="log">Current Log Window</param>
-        public static void Initialize(MainWindow main, LogWindow log) {
+        public static void Initialize(MainWindow main) {
             //Create new HTTP Client
             client = new HttpClient();
             client.DefaultRequestHeaders.Clear();
             client.DefaultRequestHeaders.Add("Accept", "application/json");
 
             _main = main;
-            _log = log;
 
-            log.WriteToLog("Stable Diffusion Interface Started");
+            Controller.WriteToLog("Stable Diffusion Interface Started");
         }
 
         /// <summary>
@@ -126,14 +124,14 @@ namespace  AI_UI{
             else command = "img2img";
 
             //Send Post Request to Generate Image
-            Application.Current.Dispatcher.Invoke(() => _log.WriteToLog($"Sending {command} Request"));
-            await Application.Current.Dispatcher.InvokeAsync(async () => _log.WriteToLog(await requestBody.ReadAsStringAsync())); ;
+            Application.Current.Dispatcher.Invoke(() => Controller.WriteToLog($"Sending {command} Request"));
+            await Application.Current.Dispatcher.InvokeAsync(async () => Controller.WriteToLog(await requestBody.ReadAsStringAsync())); ;
             var result = await client.PostAsync(url + command, requestBody);
 
             //Show Server Response
-            Application.Current.Dispatcher.Invoke(() => _log.WriteToLog("Request Finished with " + (int)result.StatusCode + " " + result.StatusCode));
+            Application.Current.Dispatcher.Invoke(() => Controller.WriteToLog("Request Finished with " + (int)result.StatusCode + " " + result.StatusCode));
             Application.Current.Dispatcher.Invoke(() => _main.ChangeStatusMessage("Generation Completed"));
-            if(result.ReasonPhrase != null) Application.Current.Dispatcher.Invoke(() => _log.WriteToLog(result.ReasonPhrase));
+            if(result.ReasonPhrase != null) Application.Current.Dispatcher.Invoke(() => Controller.WriteToLog(result.ReasonPhrase));
 
             //Deserialize Response
             string responseBody = await result.Content.ReadAsStringAsync();
@@ -141,7 +139,7 @@ namespace  AI_UI{
             ResponseStruct.batchImgInfo batchInfo = response.ExtractImgInfo();
 
             //Save Images
-            Application.Current.Dispatcher.Invoke(() => _log.WriteToLog("Saving images"));
+            Application.Current.Dispatcher.Invoke(() => Controller.WriteToLog("Saving images"));
             if (response.images != null)
                 ImgTree.SaveBatch(response.images, batchInfo, response.imgInfos);
             else MessageBox.Show("Error", "No Images Found in Response!\nCheck the log.");
@@ -160,7 +158,7 @@ namespace  AI_UI{
             while (status == State.Active) {
                 CheckProgress(observerClient);
                 Thread.Sleep(500);
-            }
+            } Application.Current.Dispatcher.Invoke(() => _main.ChangeProgressbar(0));
         }
 
         /// <summary>
@@ -169,16 +167,16 @@ namespace  AI_UI{
         /// <param name="client">HttpClient to be used for the Request</param>
         static async void CheckProgress(HttpClient client) {
             try {
-                Application.Current.Dispatcher.Invoke(() => _log.WriteToLog("Requesting Progress"));
+                Application.Current.Dispatcher.Invoke(() => Controller.WriteToLog("Requesting Progress"));
                 var response = await client.GetAsync("http://127.0.0.1:7860/sdapi/v1/progress");
                 string responseString = await response.Content.ReadAsStringAsync();
                 //Dispatcher.Invoke(() => log.WriteToLog("Progress Response Received: " + responseString));
                 ProgressStruct progressStruct = JsonSerializer.Deserialize<ProgressStruct>(responseString);
                 double progressInPercent = progressStruct.progress * 100;
-                Application.Current.Dispatcher.Invoke(() => _log.WriteToLog("Progress Response Received: " + progressInPercent.ToString()));
+                Application.Current.Dispatcher.Invoke(() => Controller.WriteToLog("Progress Response Received: " + progressInPercent.ToString()));
                 Application.Current.Dispatcher.Invoke(() => _main.ChangeStatusMessage($"Progress: {progressInPercent.ToString("0.##")}%"));
                 Application.Current.Dispatcher.Invoke(() => _main.ChangeProgressbar(progressInPercent));
-            } catch (Exception e) { Application.Current.Dispatcher.Invoke(() => _log.WriteToLog("Progress Request Failed: " + e.Message)); }
+            } catch (Exception e) { Application.Current.Dispatcher.Invoke(() => Controller.WriteToLog("Progress Request Failed: " + e.Message)); }
         }
 
     }
