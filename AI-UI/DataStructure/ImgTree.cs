@@ -62,7 +62,20 @@ namespace Data_Structure {
         }
 
         public static void SaveTree() {
-
+            TreeStruct treeStruct = new TreeStruct {
+                CurrentTreeName = currentTreeName,
+                CountImgId = countImgId,
+                CountNodeId = countNodeId
+            };
+            string treeInfo = JsonSerializer.Serialize(treeStruct);
+            string[] nodeInfos = new string[countNodeId + 1];
+            for (int i = 0; i < nodeInfos.Length; i++) {
+                nodeInfos[i] = nodes[i].ToString();
+            }
+            string[] outputString = new string[nodeInfos.Length];
+            for (int i = 1; i < outputString.Length; i++)
+                outputString[i] = nodeInfos[i - 1]; 
+            File.WriteAllLines($"output\\{currentTreeName}\\tree.txt", outputString);
         }
         
     }

@@ -59,13 +59,6 @@ namespace AI_UI {
         }
     }
 
-    public struct NodeInfo {
-        public string prompt { get; set; }
-        public string negative_prompt { get; set; }
-        public int width { get; set; }
-        public int height { get; set; }
-    }
-
     public struct ProgressStruct {
         public double progress { get; set; }
     }

@@ -5,7 +5,7 @@ using AI_UI;
 namespace Data_Structure {
     public class ImgNode {
         public int nodeId { get; set; }
-        public NodeInfo nodeInfo { get; set; }
+        public NodeInfo nodeInfo;
         public List<int> imgId { get; set; }
         public List<ImgNode> children;
         public List<int> childrenIds { get; set; } //Serializing the Objects works better with IDs
@@ -29,7 +29,14 @@ namespace Data_Structure {
         }
 
         public override string ToString() {
-            return JsonSerializer.Serialize(this);
+            string promptInfo = JsonSerializer.Serialize(nodeInfo);
+            NodeStruct nodeStruct = new NodeStruct {
+                nodeInfo = promptInfo,
+                imgIds = imgId.ToArray(),
+                childrenIds = childrenIds.ToArray()
+            };
+            return JsonSerializer.Serialize(nodeStruct);
+            
         }
 
     }
