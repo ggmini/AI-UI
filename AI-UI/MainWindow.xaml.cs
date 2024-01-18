@@ -1,6 +1,8 @@
 ﻿using System.Windows;
 using System;
 using Data_Structure;
+using System.Collections.Generic;
+using System.Windows.Controls;
 
 namespace AI_UI {
     /// <summary>
@@ -72,6 +74,5 @@ namespace AI_UI {
         public void ChangeProgressbar(double value) {
             ProgressBar.Value = value;
         }
-        
     }
 }

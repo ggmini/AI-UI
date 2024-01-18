@@ -3,6 +3,9 @@ using System;
 using System.Collections.Generic;
 using AI_UI;
 using System.Text.Json;
+using System.Windows.Controls;
+using System.Windows;
+using System.Windows.Input;
 
 namespace Data_Structure {
     public static class ImgTree {
@@ -72,9 +75,11 @@ namespace Data_Structure {
         /// Select Node in Tree
         /// </summary>
         /// <param name="nodeId"></param>
-        public static void SelectNode(int nodeId) {
-            currentNode = nodes[nodeId];
-        }
+        //public static void SelectNode(int nodeId) {
+        //    currentNode = nodes[nodeId];
+        //}
+        // ----vorübergehend ersetzt
+
         
         /// <summary>
         /// Save a New Batch of Images
@@ -105,7 +110,8 @@ namespace Data_Structure {
                 currentNode.imgId.Add(countImgId);
                 countImgId++;
                 Controller.WriteToLog("Image Id Increased to " + countImgId);
-            }        
+            }
+            PopulateTreeView();
         }
 
         /// <summary>
@@ -129,6 +135,88 @@ namespace Data_Structure {
                 outputString += "\n" + nodeInfos[i];
             File.WriteAllText($"output\\{currentTreeName}\\tree.txt", outputString);
         }
-        
+
+
+        public static void PopulateTreeView() //#ImgTree not needed as parameter?
+        {
+            Application.Current.Dispatcher.Invoke((Action)delegate
+            {
+                MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
+
+                TreeView treeView = mainWindow.treeView;
+
+                treeView.Items.Clear();
+
+                List<ImgNode> addedNodes = new List<ImgNode>();
+
+                foreach (var node in ImgTree.Nodes)
+                {
+                    if (!addedNodes.Contains(node))
+                    {
+                        TreeViewItem treeNode = CreateTreeViewItem(node, addedNodes);
+                        treeView.Items.Add(treeNode);
+                    }
+                }
+            });
+        }
+
+        public static TreeViewItem CreateTreeViewItem(ImgNode node, List<ImgNode> addedNodes)
+        {
+            TreeViewItem treeNode = new TreeViewItem { Header = $"Node {node.nodeId}", Tag = node.nodeId.ToString(), IsExpanded = true };
+            treeNode.PreviewMouseLeftButtonDown += TreeViewItem_MouseUp;
+
+            addedNodes.Add(node);
+
+            foreach (var item in node.imgId)
+            {
+                treeNode.Items.Add(new TreeViewItem { Header = $"Item {item}", Tag = item.ToString() });
+            }
+
+            foreach (var childNode in node.children)
+            {
+                TreeViewItem childTreeNode = CreateTreeViewItem(childNode, addedNodes);
+                treeNode.Items.Add(childTreeNode);
+            }
+
+            return treeNode;
+        }
+
+        private static void TreeViewItem_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            if (sender is TreeViewItem treeViewItem)
+            {
+                string headerText = treeViewItem.Header.ToString(); //unvollständig
+                // Logik
+                SelectNode(treeViewItem);
+
+                // if-else just for testing
+                if (headerText != null)
+                {
+                    Controller.WriteToLog(headerText);
+                }
+                else
+                {
+                    Controller.WriteToLog("no HeaderText found");
+                }
+            }
+        }
+
+        public static ImgNode SelectNode(TreeViewItem treeViewItem)// set via onClick
+        {
+            string searchedIdString = "0";
+            if (treeViewItem.Tag is string s)
+            {
+                searchedIdString = s;
+            }
+            int searchedId = int.Parse($"{searchedIdString}");
+            // wohl besser mit try catch
+            //if (currentNode != null && nodeId >= 0 && nodeId < nodes.Count)
+            //{
+                currentNode = nodes[searchedId];
+                return currentNode;
+            //}
+
+            //return null;
+        }
     }
 }
