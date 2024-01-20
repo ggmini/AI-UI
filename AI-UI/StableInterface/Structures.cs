@@ -43,7 +43,7 @@ namespace AI_UI {
         public batchImgInfo ExtractImgInfo() {
             batchImgInfo batchInfo = JsonSerializer.Deserialize<batchImgInfo>(info);
             imgInfo[] imgInfos = new imgInfo[batchInfo.batch_size];
-            for (int i = 0; i > batchInfo.batch_size; i++)
+            for (int i = 0; i < batchInfo.batch_size; i++)
                 imgInfos[i] = new imgInfo
                 {
                     prompt = batchInfo.prompt,
