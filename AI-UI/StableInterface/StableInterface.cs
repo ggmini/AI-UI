@@ -125,24 +125,29 @@ namespace  AI_UI{
 
             //Send Post Request to Generate Image
             Application.Current.Dispatcher.Invoke(() => Controller.WriteToLog($"Sending {command} Request"));
-            await Application.Current.Dispatcher.InvokeAsync(async () => Controller.WriteToLog(await requestBody.ReadAsStringAsync())); ;
-            var result = await client.PostAsync(url + command, requestBody);
+            await Application.Current.Dispatcher.InvokeAsync(async () => Controller.WriteToLog(await requestBody.ReadAsStringAsync())); 
 
-            //Show Server Response
-            Application.Current.Dispatcher.Invoke(() => Controller.WriteToLog("Request Finished with " + (int)result.StatusCode + " " + result.StatusCode));
-            Application.Current.Dispatcher.Invoke(() => _main.ChangeStatusMessage("Generation Completed"));
-            if(result.ReasonPhrase != null) Application.Current.Dispatcher.Invoke(() => Controller.WriteToLog(result.ReasonPhrase));
+            try {
+                var result = await client.PostAsync(url + command, requestBody);
 
-            //Deserialize Response
-            string responseBody = await result.Content.ReadAsStringAsync();
-            ResponseStruct response = JsonSerializer.Deserialize<ResponseStruct>(responseBody);
-            ResponseStruct.batchImgInfo batchInfo = response.ExtractImgInfo();
+                //Show Server Response
+                Application.Current.Dispatcher.Invoke(() => Controller.WriteToLog("Request Finished with " + (int)result.StatusCode + " " + result.StatusCode));
+                Application.Current.Dispatcher.Invoke(() => _main.ChangeStatusMessage("Generation Completed"));
+                if (result.ReasonPhrase != null) Application.Current.Dispatcher.Invoke(() => Controller.WriteToLog(result.ReasonPhrase));
 
-            //Save Images
-            Application.Current.Dispatcher.Invoke(() => Controller.WriteToLog("Saving images"));
-            if (response.images != null)
-                ImgTree.SaveBatch(response.images, batchInfo, response.imgInfos);
-            else MessageBox.Show("Error", "No Images Found in Response!\nCheck the log.");
+                //Deserialize Response
+                string responseBody = await result.Content.ReadAsStringAsync();
+                ResponseStruct response = JsonSerializer.Deserialize<ResponseStruct>(responseBody);
+                ResponseStruct.batchImgInfo batchInfo = response.ExtractImgInfo();
+
+                //Save Images
+                Application.Current.Dispatcher.Invoke(() => Controller.WriteToLog("Saving images"));
+                if (response.images != null)
+                    ImgTree.SaveBatch(response.images, batchInfo, response.imgInfos);
+                else MessageBox.Show("Error", "No Images Found in Response!\nCheck the log.");
+            } catch (HttpRequestException) {
+                MessageBox.Show("Could not connect to Stable Diffusion. Is the WebUI running?", "Error", MessageBoxButton.OK, MessageBoxImage.Error); //Show Error Message if couldnt connect to API
+            }
 
             //Set State to inactive
             status = State.Inactive;
