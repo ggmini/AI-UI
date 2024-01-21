@@ -52,7 +52,7 @@ namespace  AI_UI{
         /// <param name="batch_size">How many images should be generated</param>
         /// <param name="width">Image width in pixels</param>
         /// <param name="height">Image height in pixels</param>
-        public static void GenerateTxt2Img(string prompt, string negativePrompt, int seed, int steps, int batch_size, int width, int height) {
+        public static void GenerateTxt2Img(string prompt, string negativePrompt, long seed, int steps, int batch_size, int width, int height) {
             RequestStruct requestStruct = new() {
                 prompt = prompt,
                 negative_prompt = negativePrompt,
@@ -79,7 +79,7 @@ namespace  AI_UI{
         /// <param name="width">Image width in pixels</param>
         /// <param name="height">Image height in pixels</param>
         /// <param name="images">Collection of input images</param>
-        public static void GenerateImg2Img(string prompt, string negativePrompt, int seed, int steps, int batch_size, int width, int height, string[] images) {
+        public static void GenerateImg2Img(string prompt, string negativePrompt, long seed, int steps, int batch_size, int width, int height, string[] images) {
             RequestStruct requestStruct = new() {
                 prompt = prompt,
                 negative_prompt = negativePrompt,
