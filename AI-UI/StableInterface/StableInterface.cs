@@ -148,7 +148,6 @@ namespace  AI_UI{
             } catch (HttpRequestException) {
                 MessageBox.Show("Could not connect to Stable Diffusion. Is the WebUI running?", "Error", MessageBoxButton.OK, MessageBoxImage.Error); //Show Error Message if couldnt connect to API
             }
-
             //Set State to inactive
             status = State.Inactive;
             Application.Current.Dispatcher.Invoke(() => _main.ChangeStatusMessage("Ready"));
