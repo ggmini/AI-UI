@@ -56,7 +56,7 @@ namespace AI_UI {
         void Generate_Click(object sender, RoutedEventArgs e) {
             GenerateButton.IsEnabled = false;
 
-            StableInterface.GenerateTxt2Img(PromptBox.Text, NegativePromptBox.Text, long.Parse(SeedBox.Text), (int)StepsSlider.Value, (int)BatchSizeSlider.Value,
+            StableInterface.GenerateTxt2Img(PromptBox.Text, NegativePromptBox.Text, (long)SeedBox.Value, (int)StepsSlider.Value, (int)BatchSizeSlider.Value,
                 Convert.ToInt32(WidthBox.Text), Convert.ToInt32(HeightBox.Text));
         }
 
@@ -91,7 +91,7 @@ namespace AI_UI {
         {
             GenerateButton.IsEnabled = false;
 
-            StableInterface.GenerateTxt2Img(PromptBox.Text, NegativePromptBox.Text, (int)SeedBox.Value, (int)StepsSlider.Value, (int)BatchSizeSlider.Value,
+            StableInterface.GenerateTxt2Img(PromptBox.Text, NegativePromptBox.Text, (long)SeedBox.Value, (int)StepsSlider.Value, (int)BatchSizeSlider.Value,
                 Convert.ToInt32(WidthBox.Text), Convert.ToInt32(HeightBox.Text));
 
         }

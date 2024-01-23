@@ -1,7 +1,7 @@
 ﻿<Window x:Class="AI_UI.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Height="450" Width="1007"
+        Title="MainWindow" Height="450" Width="632"
         Closing="Window_Closing">
     <DockPanel>
         <StatusBar DockPanel.Dock="Bottom" Height="25">
@@ -21,7 +21,7 @@
             </StatusBarItem>
             <Separator Grid.Column="1" />
             <StatusBarItem Grid.Column="2">
-                <ProgressBar Name="ProgressBar" Height="20" Width="485"></ProgressBar>
+                <ProgressBar Name="ProgressBar" Height="20" Width="317"></ProgressBar>
             </StatusBarItem>
         </StatusBar>
         <Grid>
