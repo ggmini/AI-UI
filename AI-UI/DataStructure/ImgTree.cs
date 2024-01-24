@@ -72,15 +72,6 @@ namespace Data_Structure {
             } nodes.Add(currentNode);
         }
 
-        /// <summary>
-        /// Select Node in Tree
-        /// </summary>
-        /// <param name="nodeId"></param>
-        //public static void SelectNode(int nodeId) {
-        //    currentNode = nodes[nodeId];
-        //}
-        // ----vorübergehend ersetzt
-
         
         /// <summary>
         /// Save a New Batch of Images
@@ -172,21 +163,18 @@ namespace Data_Structure {
             {
                 //// Image:
 
-                //Image image = new Image
-                //{
-                //    Source = new BitmapImage(new Uri(Path.GetFullPath("output\\zoo\\0.png"))), //(ToDo: Image-path must be retreived)
-                //    Height = 20
-                //};
+                Image image = new Image {
+                    Source = new BitmapImage(new Uri(Path.GetFullPath($"output\\{currentTreeName}\\{node.nodeId}.png"))), //(ToDo: Image-path must be retreived)
+                    Height = 20
+                };
 
                 //// StackPanel to hold the TextBlock and Image
-                //StackPanel stackPanel = new StackPanel { Orientation = Orientation.Horizontal };
+                StackPanel stackPanel = new StackPanel { Orientation = Orientation.Horizontal };
                 //// TextBlock for the header text
-                //TextBlock textBlock = new TextBlock { Text = $"Item {item}" };
+                TextBlock textBlock = new TextBlock { Text = $"Item {item}" };
 
-                //stackPanel.Children.Add(textBlock);
-                //stackPanel.Children.Add(image);
-                ////
-                string stackPanel = $"Item {item}"; // Platzhalter
+                stackPanel.Children.Add(textBlock);
+                stackPanel.Children.Add(image);
 
                 treeNode.Items.Add(new TreeViewItem { Header = stackPanel, Tag = item.ToString() });
             }
