@@ -4,6 +4,7 @@ using Data_Structure;
 using System.Collections.Generic;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Input;
 
 namespace AI_UI {
     /// <summary>
@@ -76,5 +77,35 @@ namespace AI_UI {
             ProgressBar.Value = value;
         }
 
+        private void Path_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            GenerateButton.IsEnabled = false;
+
+            StableInterface.GenerateTxt2Img(PromptBox.Text, NegativePromptBox.Text, (long)SeedBox.Value, (int)StepsSlider.Value, (int)BatchSizeSlider.Value,
+                Convert.ToInt32(WidthBox.Text), Convert.ToInt32(HeightBox.Text));
+
+        }
+
+
+
+        private void TextBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+
+            if (textBox.Text == textBox.Tag.ToString())
+            {
+                textBox.Text = string.Empty;
+            }
+        }
+
+        private void TextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+
+            if (string.IsNullOrWhiteSpace(textBox.Text))
+            {
+                textBox.Text = textBox.Tag.ToString();
+            }
+        }
     }
 }

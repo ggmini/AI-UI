@@ -155,7 +155,13 @@ namespace Data_Structure {
 
         public static TreeViewItem CreateTreeViewItem(ImgNode node, List<ImgNode> addedNodes)
         {
-            TreeViewItem treeNode = new TreeViewItem { Header = $"Node {node.nodeId}", Tag = node.nodeId.ToString(), IsExpanded = true };
+            StackPanel stackPanel = new StackPanel { Orientation = Orientation.Horizontal };
+            Image image = new Image {
+                Source = new BitmapImage(new Uri(Path.GetFullPath($"output\\{currentTreeName}\\{node.imgId[0]}.png"))),
+                    Height = 50
+            };
+            stackPanel.Children.Add(image);
+            TreeViewItem treeNode = new TreeViewItem() { Header = stackPanel, Tag = node.nodeId.ToString(), IsExpanded = true };
             treeNode.PreviewMouseLeftButtonDown += TreeViewItem_MouseUp;
 
             addedNodes.Add(node);
