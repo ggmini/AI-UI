@@ -45,6 +45,7 @@ namespace AI_UI {
             MainWindow main = new();
             main.Show();
             App.Current.MainWindow = main;
+            ImgTree.PopulateTreeView();
             Close();
         }
 
