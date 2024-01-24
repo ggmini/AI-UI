@@ -3,6 +3,23 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="MainWindow" Height="450" Width="1007"
         Closing="Window_Closing">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles\GraphStyle.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <HierarchicalDataTemplate DataType="Node" ItemsSource="{Binding XPath=Children/Node}">
+
+                <Border Name="border" CornerRadius="360" BorderThickness="3"
+                        BorderBrush="Blue" Width="Auto" Height="50" MinWidth="50">
+                    <TextBlock Text="{Binding XPath=@Name}"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"/>
+                </Border>
+            </HierarchicalDataTemplate>
+        </ResourceDictionary>
+    </Window.Resources>
     <DockPanel>
         <StatusBar DockPanel.Dock="Bottom" Height="25">
             <StatusBar.ItemsPanel>
@@ -28,6 +45,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="150"/>
                 <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="50" />
@@ -43,41 +61,42 @@
             <TextBlock Name="SeedText" Grid.Column="0" Grid.Row="2" VerticalAlignment="Center" FontSize="15">Seed</TextBlock>
             <TextBlock Name="StepsText" Grid.Column="0" Grid.Row="3" VerticalAlignment="Center" FontSize="15">Steps</TextBlock>
             <TextBlock Name="BatchSizeText" Grid.Column="0" Grid.Row="4" VerticalAlignment="Center" FontSize="15">Batch Size</TextBlock>
-            <TextBox Name="PromptBox" Grid.Column="1" Grid.Row="0" Margin="0,0,207,0"></TextBox>
-            <TextBox Name="NegativePromptBox" Grid.Column="1" Grid.Row="1" Margin="0,0,207,0"></TextBox>
-            <TextBox Name="SeedBox" Grid.Column="1" Grid.Row="2" Margin="0,0,207,0">-1</TextBox>
+            <TextBox Name="PromptBox" Grid.Column="1" Grid.Row="0" Margin="0,0,0,0"></TextBox>
+            <TextBox Name="NegativePromptBox" Grid.Column="1" Grid.Row="1" Margin="0,0,0,0"></TextBox>
+            <TextBox Name="SeedBox" Grid.Column="1" Grid.Row="2" Margin="0,0,0,0">-1</TextBox>
             <Slider Name="StepsSlider"
                 Grid.Column="1" Grid.Row="3"
                 Minimum="1" Maximum="60"
                 Value="20"    
                 ValueChanged="StepsSlider_Changed"
                 IsSnapToTickEnabled="True" TickFrequency="1"
-                VerticalAlignment="Center" Margin="0,0,207,0">
+                VerticalAlignment="Center" Margin="0,0,0,0">
             </Slider>
             <Slider Name="BatchSizeSlider" 
                 Grid.Column="1" Grid.Row="4"
                 Minimum="1" Maximum="4"
                 ValueChanged="BatchSizeSlider_Changed"
                 IsSnapToTickEnabled="True" TickFrequency="1"
-                VerticalAlignment="Center" Margin="0,0,207,0">
+                VerticalAlignment="Center" Margin="0,0,0,0">
             </Slider>
-            <Grid Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Margin="0, 0, 1, 0">
+            <Grid Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Margin="0, 0, 10, 0">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="195"/>
-                    <ColumnDefinition Width="195"/>
-                    <ColumnDefinition Width="195"/>
-                    <ColumnDefinition Width="195"/>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="100"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Name="WidthText" Grid.Column="0" VerticalAlignment="Center" FontSize="15">Width</TextBlock>
-                <TextBlock Name="HeightText" Grid.Column="2" VerticalAlignment="Center" FontSize="15">Height</TextBlock>
+                <TextBlock Name="HeightText" Grid.Column="3" VerticalAlignment="Center" FontSize="15">Height</TextBlock>
                 <TextBox Name="WidthBox" Grid.Column="1" Text="512"></TextBox>
-                <TextBox Name="HeightBox" Grid.Column="3" Text="512"></TextBox>
+                <TextBox Name="HeightBox" Grid.Column="4" Text="512"></TextBox>
             </Grid>
-            <Button x:Name="GenerateButton" Grid.Column="1" Grid.Row="6" Click="Generate_Click" Margin="530,0,0,0">
-                <Button.HorizontalAlignment>Left</Button.HorizontalAlignment>
+            <Button x:Name="GenerateButton" Grid.Column="1" Grid.Row="6" Click="Generate_Click" Margin="0,0,0,0">
+                <Button.HorizontalAlignment>Right</Button.HorizontalAlignment>
                 <Button.Width>100</Button.Width> Generate
             </Button>
-            <TreeView x:Name="treeView" Grid.Column="1" HorizontalAlignment="Left" Height="389" Margin="635,0,0,0" Grid.RowSpan="7" VerticalAlignment="Top" Width="202"/>
+            <TreeView x:Name="treeView" ItemContainerStyle="{StaticResource GraphStyle}" Grid.Column="2" Grid.RowSpan="7"/>
         </Grid>
     </DockPanel>
 </Window>

@@ -159,7 +159,9 @@ namespace Data_Structure {
 
             addedNodes.Add(node);
 
-            foreach (var item in node.imgId)
+
+
+            /*foreach (var item in node.imgId)
             {
                 //// Image:
 
@@ -177,7 +179,7 @@ namespace Data_Structure {
                 stackPanel.Children.Add(image);
 
                 treeNode.Items.Add(new TreeViewItem { Header = stackPanel, Tag = item.ToString() });
-            }
+            }*/
 
             foreach (var childNode in node.children)
             {
