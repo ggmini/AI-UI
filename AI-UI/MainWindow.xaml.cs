@@ -39,16 +39,16 @@ namespace AI_UI {
         /// <summary>
         /// Called when Steps Slider is moved
         /// </summary>
-        void StepsSlider_Changed(object sender, RoutedPropertyChangedEventArgs<double> e) {
-            StepsText.Text = "Steps: " + e.NewValue.ToString();
-        }
+        //void StepsSlider_Changed(object sender, RoutedPropertyChangedEventArgs<double> e) {
+        //    StepsText.Text = "Steps: " + e.NewValue.ToString();
+        //}
 
         /// <summary>
         /// Called when Batch Size Slider is moved
         /// </summary>
-        void BatchSizeSlider_Changed(object sender, RoutedPropertyChangedEventArgs<double> e) {
-            BatchSizeText.Text = "Batch Size: " + e.NewValue.ToString();
-        }
+        //void BatchSizeSlider_Changed(object sender, RoutedPropertyChangedEventArgs<double> e) {
+        //    BatchSizeText.Text = "Batch Size: " + e.NewValue.ToString();
+        //}
 
         /// <summary>
         /// Called when Generate Button is clicked
@@ -56,7 +56,7 @@ namespace AI_UI {
         void Generate_Click(object sender, RoutedEventArgs e) {
             GenerateButton.IsEnabled = false;
 
-            StableInterface.GenerateTxt2Img(PromptBox.Text, NegativePromptBox.Text, Convert.ToInt32(SeedBox.Text), (int)StepsSlider.Value, (int)BatchSizeSlider.Value,
+            StableInterface.GenerateTxt2Img(PromptBox.Text, NegativePromptBox.Text, (long)SeedBox.Value, (int)StepsSlider.Value, (int)BatchSizeSlider.Value,
                 Convert.ToInt32(WidthBox.Text), Convert.ToInt32(HeightBox.Text));
         }
 

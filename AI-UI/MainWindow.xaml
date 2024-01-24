@@ -22,7 +22,7 @@
             </StatusBarItem>
             <Separator Grid.Column="1" />
             <StatusBarItem Grid.Column="2">
-                <ProgressBar Name="ProgressBar" Height="20" Width="485"></ProgressBar>
+                <ProgressBar Name="ProgressBar" Height="20" Width="317"></ProgressBar>
             </StatusBarItem>
         </StatusBar>
         <Grid Margin="10, 10, 10, 10">
@@ -95,5 +95,6 @@
                 </TreeView.Resources>
             </TreeView>
         </Grid>
+
     </DockPanel>
 </Window>

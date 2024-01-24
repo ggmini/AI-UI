@@ -72,6 +72,18 @@ namespace Data_Structure {
             } nodes.Add(currentNode);
         }
 
+<<<<<<< HEAD
+=======
+        /// <summary>
+        /// Select Node in Tree
+        /// </summary>
+        /// <param name="nodeId"></param>
+        //public static void SelectNode(int nodeId) {
+        //    currentNode = nodes[nodeId];
+        //}
+        // ----vorübergehend ersetzt
+
+>>>>>>> main
         
         /// <summary>
         /// Save a New Batch of Images
@@ -103,13 +115,18 @@ namespace Data_Structure {
                 countImgId++;
                 Controller.WriteToLog("Image Id Increased to " + countImgId);
             }
+<<<<<<< HEAD
             PopulateTreeView();
+=======
+            //PopulateTreeView();
+>>>>>>> main
         }
 
         /// <summary>
         /// Save Tree Structure to File
         /// </summary>
         public static void SaveTree() {
+            if (start == null) return; //Don't Save Tree if nothing has been generated (nothing to save!)
             //Create TreeStruct
             TreeStruct treeStruct = new TreeStruct {
                 CurrentTreeName = currentTreeName,
@@ -129,6 +146,7 @@ namespace Data_Structure {
         }
 
 
+<<<<<<< HEAD
         public static void PopulateTreeView()
         {
             Application.Current.Dispatcher.Invoke((Action)delegate
@@ -161,10 +179,39 @@ namespace Data_Structure {
             };
             stackPanel.Children.Add(image);
             TreeViewItem treeNode = new TreeViewItem() { Header = stackPanel, Tag = node.nodeId.ToString(), IsExpanded = true };
+=======
+        //public static void PopulateTreeView()
+        //{
+        //    Application.Current.Dispatcher.Invoke((Action)delegate
+        //    {
+        //        MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
+
+        //        TreeView treeView = mainWindow.treeView;
+
+        //        treeView.Items.Clear();
+
+        //        List<ImgNode> addedNodes = new List<ImgNode>();
+
+        //        foreach (var node in ImgTree.Nodes)
+        //        {
+        //            if (!addedNodes.Contains(node))
+        //            {
+        //                TreeViewItem treeNode = CreateTreeViewItem(node, addedNodes);
+        //                treeView.Items.Add(treeNode);
+        //            }
+        //        }
+        //    });
+        //}
+
+        public static TreeViewItem CreateTreeViewItem(ImgNode node, List<ImgNode> addedNodes)
+        {
+            TreeViewItem treeNode = new TreeViewItem { Header = $"Node {node.nodeId}", Tag = node.nodeId.ToString(), IsExpanded = true };
+>>>>>>> main
             treeNode.PreviewMouseLeftButtonDown += TreeViewItem_MouseUp;
 
             addedNodes.Add(node);
 
+<<<<<<< HEAD
 
 
             /*foreach (var item in node.imgId)
@@ -186,6 +233,30 @@ namespace Data_Structure {
 
                 treeNode.Items.Add(new TreeViewItem { Header = stackPanel, Tag = item.ToString() });
             }*/
+=======
+            foreach (var item in node.imgId)
+            {
+                //// Image:
+
+                //Image image = new Image
+                //{
+                //    Source = new BitmapImage(new Uri(Path.GetFullPath("output\\zoo\\0.png"))), //(ToDo: Image-path must be retreived)
+                //    Height = 20
+                //};
+
+                //// StackPanel to hold the TextBlock and Image
+                //StackPanel stackPanel = new StackPanel { Orientation = Orientation.Horizontal };
+                //// TextBlock for the header text
+                //TextBlock textBlock = new TextBlock { Text = $"Item {item}" };
+
+                //stackPanel.Children.Add(textBlock);
+                //stackPanel.Children.Add(image);
+                ////
+                string stackPanel = $"Item {item}"; // Platzhalter
+
+                treeNode.Items.Add(new TreeViewItem { Header = stackPanel, Tag = item.ToString() });
+            }
+>>>>>>> main
 
             foreach (var childNode in node.children)
             {
@@ -216,7 +287,12 @@ namespace Data_Structure {
             }
         }
 
+<<<<<<< HEAD
         public static ImgNode SelectNode(TreeViewItem treeViewItem)// set via onClick
+=======
+        // set via onClick
+        public static ImgNode SelectNode(TreeViewItem treeViewItem)
+>>>>>>> main
         {
             string searchedIdString = "0";
             if (treeViewItem.Tag is string s)
@@ -227,8 +303,23 @@ namespace Data_Structure {
             // wohl besser mit try catch
             //if (currentNode != null && nodeId >= 0 && nodeId < nodes.Count)
             //{
+<<<<<<< HEAD
                 currentNode = nodes[searchedId];
                 return currentNode;
+=======
+            currentNode = nodes[searchedId];
+
+            Application.Current.Dispatcher.Invoke((Action)delegate
+            {
+                MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
+                mainWindow.PromptBox.Text = $"{currentNode.nodeInfo.prompt}";
+                mainWindow.NegativePromptBox.Text = $"{currentNode.nodeInfo.negative_prompt}";
+                mainWindow.WidthBox.Text = $"{currentNode.nodeInfo.width}";
+                mainWindow.HeightBox.Text = $"{currentNode.nodeInfo.height}";
+            });
+                        
+            return currentNode;
+>>>>>>> main
             //}
 
             //return null;

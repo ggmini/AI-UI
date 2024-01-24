@@ -4,7 +4,7 @@ namespace AI_UI {
     public struct RequestStruct {
         public string prompt { get; set; }
         public string negative_prompt { get; set; }
-        public int seed { get; set; }
+        public long seed { get; set; }
         public int steps { get; set; }
         public int width { get; set; }
         public int height { get; set; }
@@ -43,7 +43,7 @@ namespace AI_UI {
         public batchImgInfo ExtractImgInfo() {
             batchImgInfo batchInfo = JsonSerializer.Deserialize<batchImgInfo>(info);
             imgInfo[] imgInfos = new imgInfo[batchInfo.batch_size];
-            for (int i = 0; i > batchInfo.batch_size; i++)
+            for (int i = 0; i < batchInfo.batch_size; i++)
                 imgInfos[i] = new imgInfo
                 {
                     prompt = batchInfo.prompt,

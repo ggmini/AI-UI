@@ -6,6 +6,11 @@
     <RootNamespace>AI_UI</RootNamespace>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon>Assets\app.ico</ApplicationIcon>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="Assets\app.ico" />
+  </ItemGroup>
 
 </Project>
