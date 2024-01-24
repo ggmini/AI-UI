@@ -110,6 +110,7 @@ namespace Data_Structure {
         /// Save Tree Structure to File
         /// </summary>
         public static void SaveTree() {
+            if (start == null) return; //Don't Save Tree if nothing has been generated (nothing to save!)
             //Create TreeStruct
             TreeStruct treeStruct = new TreeStruct {
                 CurrentTreeName = currentTreeName,
@@ -227,8 +228,18 @@ namespace Data_Structure {
             // wohl besser mit try catch
             //if (currentNode != null && nodeId >= 0 && nodeId < nodes.Count)
             //{
-                currentNode = nodes[searchedId];
-                return currentNode;
+            currentNode = nodes[searchedId];
+
+            Application.Current.Dispatcher.Invoke((Action)delegate
+            {
+                MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
+                mainWindow.PromptBox.Text = $"{currentNode.nodeInfo.prompt}";
+                mainWindow.NegativePromptBox.Text = $"{currentNode.nodeInfo.negative_prompt}";
+                mainWindow.WidthBox.Text = $"{currentNode.nodeInfo.width}";
+                mainWindow.HeightBox.Text = $"{currentNode.nodeInfo.height}";
+            });
+                        
+            return currentNode;
             //}
 
             //return null;

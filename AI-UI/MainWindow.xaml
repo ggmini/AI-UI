@@ -22,65 +22,256 @@
             </StatusBarItem>
             <Separator Grid.Column="1" />
             <StatusBarItem Grid.Column="2">
-                <ProgressBar Name="ProgressBar" Height="20" Width="485"></ProgressBar>
+                <ProgressBar Name="ProgressBar" Height="20" Width="317"></ProgressBar>
             </StatusBarItem>
         </StatusBar>
-        <Grid Margin="10, 10, 10, 10">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="150"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="50" />
-                <RowDefinition Height="50" />
-                <RowDefinition Height="50" />
-                <RowDefinition Height="50" />
-                <RowDefinition Height="50" />
-                <RowDefinition Height="50" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-            <TextBlock Name="PromptText" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" FontSize="15">Prompt</TextBlock>
-            <TextBlock Name="NegativePromptText" Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" FontSize="15">Negative Prompt</TextBlock>
-            <TextBlock Name="SeedText" Grid.Column="0" Grid.Row="2" VerticalAlignment="Center" FontSize="15">Seed</TextBlock>
-            <TextBlock Name="StepsText" Grid.Column="0" Grid.Row="3" VerticalAlignment="Center" FontSize="15">Steps</TextBlock>
-            <TextBlock Name="BatchSizeText" Grid.Column="0" Grid.Row="4" VerticalAlignment="Center" FontSize="15">Batch Size</TextBlock>
-            <TextBox Name="PromptBox" Grid.Column="1" Grid.Row="0" Margin="0,0,0,0"></TextBox>
-            <TextBox Name="NegativePromptBox" Grid.Column="1" Grid.Row="1" Margin="0,0,0,0"></TextBox>
-            <TextBox Name="SeedBox" Grid.Column="1" Grid.Row="2" Margin="0,0,0,0">-1</TextBox>
-            <Slider Name="StepsSlider"
-                Grid.Column="1" Grid.Row="3"
-                Minimum="1" Maximum="60"
-                Value="20"    
-                ValueChanged="StepsSlider_Changed"
-                IsSnapToTickEnabled="True" TickFrequency="1"
-                VerticalAlignment="Center" Margin="0,0,0,0">
-            </Slider>
-            <Slider Name="BatchSizeSlider" 
-                Grid.Column="1" Grid.Row="4"
-                Minimum="1" Maximum="4"
-                ValueChanged="BatchSizeSlider_Changed"
-                IsSnapToTickEnabled="True" TickFrequency="1"
-                VerticalAlignment="Center" Margin="0,0,0,0">
-            </Slider>
-            <Grid Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Margin="0, 0, 10, 0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="50"/>
-                    <ColumnDefinition Width="100"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="50"/>
-                    <ColumnDefinition Width="100"/>
-                </Grid.ColumnDefinitions>
-                <TextBlock Name="WidthText" Grid.Column="0" VerticalAlignment="Center" FontSize="15">Width</TextBlock>
-                <TextBlock Name="HeightText" Grid.Column="3" VerticalAlignment="Center" FontSize="15">Height</TextBlock>
-                <TextBox Name="WidthBox" Grid.Column="1" Text="512"></TextBox>
-                <TextBox Name="HeightBox" Grid.Column="4" Text="512"></TextBox>
-            </Grid>
-            <Button x:Name="GenerateButton" Grid.Column="1" Grid.Row="6" Click="Generate_Click" Margin="0,0,0,0">
-                <Button.HorizontalAlignment>Right</Button.HorizontalAlignment>
-                <Button.Width>100</Button.Width> Generate
-            </Button>
-            <TreeView x:Name="treeView" Grid.Column="2" Grid.RowSpan="7">
+        <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="632"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+            <Viewbox Stretch="Uniform" Grid.Column="0">
+                <Canvas x:Name="txt2imgf24batch" Height="1122" Width="1728">
+                    <Path Fill="#FFFFFF">
+                        <Path.Data>
+                            <RectangleGeometry Rect="0,0,1728,1117"/>
+                        </Path.Data>
+                    </Path>
+                    <Path Fill="#010D11">
+                        <Path.Data>
+                            <RectangleGeometry Rect="0,5,1728,1117"/>
+                        </Path.Data>
+                    </Path>
+                    <Path Fill="#D9D9D9">
+                        <Path.Data>
+                            <RectangleGeometry Rect="38,139,782,413"/>
+                        </Path.Data>
+                    </Path>
+                    <Path Fill="#D9D9D9">
+                        <Path.Data>
+                            <RectangleGeometry Rect="38,608,782,413"/>
+                        </Path.Data>
+                    </Path>
+                    <!--F2.1-->
+                    <Path Fill="#D9D9D9">
+                        <Path.Data>
+                            <RectangleGeometry Rect="858,339.399,417,218.101"/>
+                        </Path.Data>
+                    </Path>
+                    <!--F2.2-->
+                    <Path Fill="#D9D9D9">
+                        <Path.Data>
+                            <RectangleGeometry Rect="1289,339.399,417,218.101"/>
+                        </Path.Data>
+                    </Path>
+                    <!--F2.3-->
+                    <Path Fill="#D9D9D9">
+                        <Path.Data>
+                            <RectangleGeometry Rect="858,587.399,417,218.101"/>
+                        </Path.Data>
+                    </Path>
+                    <!--F2.4-->
+                    <Path Fill="#D9D9D9">
+                        <Path.Data>
+                            <RectangleGeometry Rect="1289,587.399,417,218.101"/>
+                        </Path.Data>
+                    </Path>
+                    <Path Fill="#010D11">
+                        <!--formerly white-->
+                        <Path.Data>
+                            <RectangleGeometry Rect="0,0,600,1117"/>
+                        </Path.Data>
+                    </Path>
+                    <Path Fill="#B1D4DF">
+                        <Path.Data>
+                            <EllipseGeometry Center="1625,1031" RadiusX="44" RadiusY="44"/>
+                        </Path.Data>
+                    </Path>
+                    <Path Fill="#CFE2E8">
+                        <Path.Data>
+                            <EllipseGeometry Center="1625,1031" RadiusX="39" RadiusY="39"/>
+                        </Path.Data>
+                    </Path>
+                    <Path StrokeThickness="2" Stroke="#33363F" Data="M1633.75 1027.88C1633.75 1024.98 1636.1 1022.62 1639 1022.62C1641.9 1022.63 1644.25 1024.98 1644.25 1027.88C1644.25 1030.77 1641.9 1033.13 1639 1033.12C1636.1 1033.12 1633.75 1030.77 1633.75 1027.88ZM1633.75 1027.88H1614.12C1612.24 1027.88 1611.3 1027.88 1610.71 1027.29C1610.12 1026.7 1610.12 1025.76 1610.12 1023.88L1610.12 1017.38M1633.75 1048.88C1633.75 1045.98 1636.1 1043.62 1639 1043.62C1641.9 1043.63 1644.25 1045.98 1644.25 1048.88C1644.25 1051.77 1641.9 1054.13 1639 1054.12C1636.1 1054.12 1633.75 1051.77 1633.75 1048.88ZM1633.75 1048.88H1614.12C1612.24 1048.88 1611.3 1048.87 1610.71 1048.29C1610.12 1047.7 1610.12 1046.76 1610.12 1044.88V1020M1610.12 1017.38C1613.02 1017.38 1615.37 1015.02 1615.37 1012.12C1615.37 1009.23 1613.02 1006.88 1610.12 1006.88C1607.23 1006.87 1604.88 1009.23 1604.88 1012.12C1604.87 1015.02 1607.23 1017.37 1610.12 1017.38Z"/>
+                    <Path Fill="#00141B">
+                        <Path.Data>
+                            <RectangleGeometry Rect="141,5,653,1117"/>
+                        </Path.Data>
+                    </Path>
+                    <Path Fill="#013343">
+                        <Path.Data>
+                            <RectangleGeometry Rect="175,582,282,46" RadiusX="20" RadiusY="20"/>
+                        </Path.Data>
+                    </Path>
+                    <TextBox Name="WidthBox" Text="Width" Tag="Width" FontFamily="Dosis" FontSize="20" Foreground="#B1D4DF" Background="Transparent" BorderBrush="Transparent" Canvas.Left="191" Canvas.Top="593" Height="29" Width="248" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Center" GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus"/>
+                    <Path Fill="#013343">
+                        <Path.Data>
+                            <RectangleGeometry Rect="496,582,282,46" RadiusX="20" RadiusY="20"/>
+                        </Path.Data>
+                    </Path>
+                    <TextBox Name="HeightBox" Text="Height" Tag="Height" FontFamily="Dosis" FontSize="20" Foreground="#B1D4DF" Background="Transparent" BorderBrush="Transparent" Canvas.Left="513" Canvas.Top="593" Height="29" Width="248" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Center" GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus"/>
+                    <!--Width
+Height-->
+                    <Path Fill="#D9D9D9">
+                        <Path.Data>
+                            <RectangleGeometry Rect="198,366,557,5" RadiusX="2.5" RadiusY="2.5"/>
+                        </Path.Data>
+                    </Path>
+                    <!--<Path Fill="#007FA7">
+                    <Path.Data>
+                        <RectangleGeometry Rect="198,366,10,5" RadiusX="2.5" RadiusY="2.5"/>
+                    </Path.Data>
+                </Path>-->
+                    <!--<Path Fill="#007FA7">
+                    <Path.Data>
+                        <EllipseGeometry Center="205,368" RadiusX="7" RadiusY="7"/>
+                    </Path.Data>
+                </Path>-->
+                    <Path Fill="#D9D9D9">
+                        <Path.Data>
+                            <RectangleGeometry Rect="698,326,57,30" RadiusX="10" RadiusY="10"/>
+                        </Path.Data>
+                    </Path>
+                    <TextBlock Text="Sampling Steps" FontFamily="Dosis" Foreground="#B1D4DF" FontSize="20" Canvas.Left="191" Canvas.Top="328" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <Slider x:Name="StepsSlider" Value="20" Minimum="1" Maximum="150" IsSnapToTickEnabled="True" TickFrequency="1" Canvas.Left="195" Canvas.Top="360" HorizontalAlignment="Center" VerticalAlignment="Center" Width="563"/>
+                    <TextBlock Text="{Binding Value, ElementName=StepsSlider}" FontFamily="Dosis" Foreground="#000000" FontSize="20" TextAlignment="Center" Canvas.Left="704" Canvas.Top="331" HorizontalAlignment="Left" VerticalAlignment="Center" Width="45"/>
+                    <!--20 Sampling Steps-->
+                    <Path Fill="#D9D9D9">
+                        <Path.Data>
+                            <RectangleGeometry Rect="198,451,557,5" RadiusX="2.5" RadiusY="2.5"/>
+                        </Path.Data>
+                    </Path>
+                    <Path Fill="#D9D9D9">
+                        <Path.Data>
+                            <RectangleGeometry Rect="698,411,57,30" RadiusX="10" RadiusY="10"/>
+                        </Path.Data>
+                    </Path>
+                    <TextBlock Text="Batch Size" FontFamily="Dosis" Foreground="#B1D4DF" FontSize="20" Canvas.Left="191" Canvas.Top="412" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <Slider x:Name="BatchSizeSlider" Value="1" Minimum="1" Maximum="8" IsSnapToTickEnabled="True" TickFrequency="1" Canvas.Left="195" Canvas.Top="445" HorizontalAlignment="Center" VerticalAlignment="Center" Width="563"/>
+                    <TextBlock Text="{Binding Value, ElementName=BatchSizeSlider}" FontFamily="Dosis" Foreground="#000000" FontSize="20" TextAlignment="Center" Canvas.Left="704" Canvas.Top="416" HorizontalAlignment="Left" VerticalAlignment="Center" Width="45"/>
+                    <!--4 Batch Count-->
+                    <Path Fill="#D9D9D9">
+                        <Path.Data>
+                            <RectangleGeometry Rect="198,536,557,5" RadiusX="2.5" RadiusY="2.5"/>
+                        </Path.Data>
+                    </Path>
+                    <Path Fill="#D9D9D9">
+                        <Path.Data>
+                            <RectangleGeometry Rect="698,496,57,30" RadiusX="10" RadiusY="10"/>
+                        </Path.Data>
+                    </Path>
+                    <TextBlock Text="Seed" FontFamily="Dosis" Foreground="#B1D4DF" FontSize="20" Canvas.Left="191" Canvas.Top="497" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <Slider x:Name="SeedBox" Value="-1" Minimum="-1" Maximum="4294967295" IsSnapToTickEnabled="True" TickFrequency="1" Canvas.Left="195" Canvas.Top="530" HorizontalAlignment="Center" VerticalAlignment="Center" Width="563"/>
+                    <TextBox Text="{Binding Value, ElementName=SeedBox}" FontFamily="Dosis" Foreground="#000000" FontSize="20" TextAlignment="Center" Background="Transparent" BorderBrush="Transparent" TextWrapping="WrapWithOverflow" Canvas.Left="704" Canvas.Top="501" HorizontalAlignment="Left" VerticalAlignment="Center" Width="45"/>
+                    <!--2 Seeds-->
+                    <Path Fill="#D9D9D9">
+                        <Path.Data>
+                            <RectangleGeometry Rect="649,496,39,30" RadiusX="10" RadiusY="10"/>
+                        </Path.Data>
+                    </Path>
+                    <Path>
+                        <!--<Path.Fill/>-->
+                        <Path.Data>
+                            <RectangleGeometry Rect="654,497,28,28"/>
+                        </Path.Data>
+                    </Path>
+                    <Path Fill="#F48D14">
+                        <Path.Data>
+                            <RectangleGeometry Rect="286,971,363,99" RadiusX="49.5" RadiusY="49.5"/>
+                        </Path.Data>
+                        <Path.Style>
+                            <Style TargetType="Path">
+                                <EventSetter Event="MouseLeftButtonDown" Handler="Path_MouseLeftButtonDown"/>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Fill" Value="#FFA500"/>
+                                        <!-- Set the hover color for the orange object -->
+                                    </Trigger>
+                                    <EventTrigger RoutedEvent="MouseEnter">
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <ColorAnimation Storyboard.TargetProperty="(Path.Fill).(SolidColorBrush.Color)" To="#FFFF00" Duration="0:0:0.1"/>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </EventTrigger>
+                                    <EventTrigger RoutedEvent="MouseLeave">
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <ColorAnimation Storyboard.TargetProperty="(Path.Fill).(SolidColorBrush.Color)" To="#F48D14" Duration="0:0:0.1"/>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </EventTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Path.Style>
+                    </Path>
+                    <TextBlock x:Name="GenerateButton" Text="GENERATE" FontFamily="Dosis" FontSize="36" FontWeight="Bold" Foreground="#013343" Background="Transparent" Canvas.Left="377" Canvas.Top="1001" HorizontalAlignment="Left" VerticalAlignment="Top" IsHitTestVisible="False"/>
+                    <!--GENERATE-->
+                    <Path Fill="#006A8B">
+                        <Path.Data>
+                            <RectangleGeometry Rect="337.5,656,282,34" RadiusX="17" RadiusY="17"/>
+                        </Path.Data>
+                    </Path>
+                    <TextBlock Name="MoreSetings" Text="More Settings" FontFamily="Dosis" FontSize="20" Foreground="#CFE2E8" Background="Transparent" Canvas.Left="415" Canvas.Top="661" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <!--More Settings-->
+                    <Path Fill="#013343">
+                        <Path.Data>
+                            <RectangleGeometry Rect="175,58,246,113" RadiusX="20" RadiusY="20"/>
+                        </Path.Data>
+                    </Path>
+                    <TextBox Name="PromptBox" Text="Prompt" Tag="Prompt" FontFamily="Dosis" FontSize="20" Foreground="#B1D4DF" Background="Transparent" BorderBrush="Transparent" Canvas.Left="184" Canvas.Top="63" Height="103" Width="228" TextWrapping="Wrap" GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus"/>
+                    <!--Prompt-->
+                    <Path Fill="#013343">
+                        <Path.Data>
+                            <RectangleGeometry Rect="514,58,246,113" RadiusX="20" RadiusY="20"/>
+                        </Path.Data>
+                    </Path>
+                    <TextBox Name="PromptBox2" Text="Prompt" Tag="Prompt" FontFamily="Dosis" FontSize="20" Foreground="#B1D4DF" Background="Transparent" BorderBrush="Transparent" Canvas.Left="523" Canvas.Top="63" Height="103" Width="228" TextWrapping="Wrap" GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus"/>
+                    <!--Prompt-->
+                    <Path Fill="#013343">
+                        <Path.Data>
+                            <RectangleGeometry Rect="175,182,246,113" RadiusX="20" RadiusY="20"/>
+                        </Path.Data>
+                    </Path>
+                    <TextBox Name="NegativePromptBox" Text="Negative Prompt" Tag="Negative Prompt" FontFamily="Dosis" FontSize="20" Foreground="#B1D4DF" Background="Transparent" BorderBrush="Transparent" Canvas.Left="184" Canvas.Top="186" Height="103" Width="228" TextWrapping="Wrap" GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus"/>
+                    <!--Negative Prompt-->
+                    <Path Fill="#013343">
+                        <Path.Data>
+                            <RectangleGeometry Rect="514,182,246,113" RadiusX="20" RadiusY="20"/>
+                        </Path.Data>
+                    </Path>
+                    <TextBox Name="NegativePromptBox2" Text="Negative Prompt" Tag="Negative Prompt" FontFamily="Dosis" FontSize="20" Foreground="#B1D4DF" Background="Transparent" BorderBrush="Transparent" Canvas.Left="523" Canvas.Top="186" Height="103" Width="228" TextWrapping="Wrap" GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus"/>
+                    <!--Negative Prompt-->
+                    <Path Fill="#014F67" Data="M151 5H286V17.2C286 27.2706 286 32.3059 284.228 36.2303C282.224 40.669 278.669 44.2239 274.23 46.2281C270.306 48 265.271 48 255.2 48H151V5Z"/>
+                    <TextBlock x:Name="nodeName" Text="XXX1" FontFamily="Dosis" FontSize="24" Foreground="White" Background="Transparent" HorizontalAlignment="Left" Canvas.Left="175" Canvas.Top="2" VerticalAlignment="Center"/>
+                    <Path Fill="#014F67" Data="M492 0H627V12.2C627 22.2706 627 27.3059 625.228 31.2303C623.224 35.669 619.669 39.2239 615.23 41.2281C611.306 43 606.271 43 596.2 43H522.8C512.729 43 507.694 43 503.77 41.2281C499.331 39.2239 495.776 35.669 493.772 31.2303C492 27.3059 492 22.2706 492 12.2V0Z"/>
+                    <TextBlock x:Name="node2Name" Text="XXX2" FontFamily="Dosis" FontSize="24" Foreground="White" Background="Transparent" HorizontalAlignment="Left" Canvas.Left="514" Canvas.Top="2" VerticalAlignment="Center"/>
+                    <!--F1.1 F0.2-->
+                    <Path Stroke="#CFE2E8">
+                        <Path.Data>
+                            <LineGeometry StartPoint="468.5,5.00185" EndPoint="467.43,295.002"/>
+                        </Path.Data>
+                    </Path>
+                    <!--<Image Source="{StaticResource singledice.png}" Height="30" Width="30" Canvas.Left="654" Canvas.Top="496" HorizontalAlignment="Left" VerticalAlignment="Top"/>-->
+
+
+                    <Path Fill="#00171F">
+                        <Path.Data>
+                            <RectangleGeometry Rect="0,0,150,1117"/>
+                        </Path.Data>
+                    </Path>
+                    <TextBlock Text="txt2img" FontFamily="Dosis" Foreground="#F48D14" FontSize="20" Height="24" Canvas.Left="45" Canvas.Top="165" HorizontalAlignment="Left" VerticalAlignment="Center" Width="105"/>
+                    <TextBlock Text="img2img" FontFamily="Dosis" Foreground="#B1D4DF" FontSize="20" Height="24" Canvas.Left="45" Canvas.Top="215" HorizontalAlignment="Left" VerticalAlignment="Center" Width="105"/>
+                    <TextBlock Text="extra" FontFamily="Dosis" Foreground="#B1D4DF" FontSize="20" Height="24" Canvas.Left="45" Canvas.Top="265" HorizontalAlignment="Left" VerticalAlignment="Center" Width="105"/>
+                    <TextBlock Text="PNG Info" FontFamily="Dosis" Foreground="#B1D4DF" FontSize="20" Height="24" Canvas.Left="45" Canvas.Top="315" HorizontalAlignment="Left" VerticalAlignment="Center" Width="105"/>
+                    <TextBlock Text="Settings" FontFamily="Dosis" Foreground="#B1D4DF" FontSize="20" Height="24" Canvas.Left="52" Canvas.Top="1030" HorizontalAlignment="Left" VerticalAlignment="Center" Width="98"/>
+
+
+
+
+                </Canvas>
+            </Viewbox>
+            <TreeView x:Name="treeView" Grid.Column="1">
                 <TreeView.Resources>
                     <ResourceDictionary>
                         <ResourceDictionary.MergedDictionaries>
@@ -95,5 +286,6 @@
                 </TreeView.Resources>
             </TreeView>
         </Grid>
+
     </DockPanel>
 </Window>
