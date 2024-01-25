@@ -201,7 +201,7 @@ namespace Data_Structure {
         {
             if (sender is TreeViewItem treeViewItem)
             {
-                string headerText = treeViewItem.Header.ToString(); //unvollständig
+                string headerText = treeViewItem.Tag.ToString(); //unvollständig
                 // Logik
                 SelectNode(treeViewItem);
 

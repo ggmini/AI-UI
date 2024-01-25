@@ -5,6 +5,7 @@
         Title="MainWindow" Height="450" Width="1007"
         Closing="Window_Closing">
     <DockPanel>
+        <!--#region StatusBar-->
         <StatusBar DockPanel.Dock="Bottom" Height="25">
             <StatusBar.ItemsPanel>
                 <ItemsPanelTemplate>
@@ -25,55 +26,17 @@
                 <ProgressBar Name="ProgressBar" Height="20" Width="317"></ProgressBar>
             </StatusBarItem>
         </StatusBar>
+        <!--#endregion-->
         <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="632"/>
+            <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
             <Viewbox Stretch="Uniform" Grid.Column="0">
-                <Canvas x:Name="txt2imgf24batch" Height="1122" Width="1728">
-                    <Path Fill="#FFFFFF">
+                <Canvas x:Name="txt2imgf24batch" Height="1122" Width="794">
+                    <Path Fill="#FFFFFF" HorizontalAlignment="Left" Stretch="Fill" VerticalAlignment="Center" Width="794">
                         <Path.Data>
                             <RectangleGeometry Rect="0,0,1728,1117"/>
-                        </Path.Data>
-                    </Path>
-                    <Path Fill="#010D11">
-                        <Path.Data>
-                            <RectangleGeometry Rect="0,5,1728,1117"/>
-                        </Path.Data>
-                    </Path>
-                    <Path Fill="#D9D9D9">
-                        <Path.Data>
-                            <RectangleGeometry Rect="38,139,782,413"/>
-                        </Path.Data>
-                    </Path>
-                    <Path Fill="#D9D9D9">
-                        <Path.Data>
-                            <RectangleGeometry Rect="38,608,782,413"/>
-                        </Path.Data>
-                    </Path>
-                    <!--F2.1-->
-                    <Path Fill="#D9D9D9">
-                        <Path.Data>
-                            <RectangleGeometry Rect="858,339.399,417,218.101"/>
-                        </Path.Data>
-                    </Path>
-                    <!--F2.2-->
-                    <Path Fill="#D9D9D9">
-                        <Path.Data>
-                            <RectangleGeometry Rect="1289,339.399,417,218.101"/>
-                        </Path.Data>
-                    </Path>
-                    <!--F2.3-->
-                    <Path Fill="#D9D9D9">
-                        <Path.Data>
-                            <RectangleGeometry Rect="858,587.399,417,218.101"/>
-                        </Path.Data>
-                    </Path>
-                    <!--F2.4-->
-                    <Path Fill="#D9D9D9">
-                        <Path.Data>
-                            <RectangleGeometry Rect="1289,587.399,417,218.101"/>
                         </Path.Data>
                     </Path>
                     <Path Fill="#010D11">
