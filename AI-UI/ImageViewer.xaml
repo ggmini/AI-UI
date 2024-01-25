@@ -1,0 +1,23 @@
+﻿<Window x:Class="AI_UI.ImageViewer"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="ImageViwer" Height="700" Width="1000"
+        Closing="OnClose">
+    <Grid RenderTransformOrigin="0.498,0.622">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="120"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="100"/>
+        </Grid.ColumnDefinitions>
+        <Image Name="ImageView" Grid.Row="0" Grid.ColumnSpan="3"/>
+        <Button Name="NextButton" Grid.Row="1" Grid.Column="2" Content="Next" FontSize="40" Height="100" VerticalAlignment="Bottom"
+                Click="NextClick"/>
+        <Button Name="BackButton" Grid.Row="1" Grid.Column="0" Content="Back" FontSize="40" Height="100" VerticalAlignment="Bottom"
+                Click="BackClick"/>
+        <TextBlock Name="ImageInfo" Grid.Row="1" Grid.Column="1" Margin="5,5,5,5" TextWrapping="Wrap"/>
+    </Grid>
+</Window>

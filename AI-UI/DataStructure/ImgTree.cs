@@ -16,8 +16,12 @@ namespace Data_Structure {
         private static int countImgId = 0;
         private static ImgNode currentNode;// set via onClick
         private static string currentTreeName;
+        public static string CurrentTreeName { get => currentTreeName; }
         private static List<ImgNode> nodes;
         public static List<ImgNode> Nodes { get => nodes; }
+
+        public static ImageViewer ImageViewer;
+        public static bool ImageViewerOpen = false;
 
         /// <summary>
         /// Create New Tree
@@ -158,11 +162,14 @@ namespace Data_Structure {
             StackPanel stackPanel = new StackPanel { Orientation = Orientation.Horizontal };
             Image image = new Image {
                 Source = new BitmapImage(new Uri(Path.GetFullPath($"output\\{currentTreeName}\\{node.imgId[0]}.png"))),
-                    Height = 50
+                    Height = 100
             };
             stackPanel.Children.Add(image);
             TreeViewItem treeNode = new TreeViewItem() { Header = stackPanel, Tag = node.nodeId.ToString(), IsExpanded = true };
+
+            //These Events execute for all parent nodes as well...this element executes last so it's still working as intended
             treeNode.PreviewMouseLeftButtonDown += TreeViewItem_MouseUp;
+            treeNode.PreviewMouseDoubleClick += TreeViewItem_MouseDouble;
 
             addedNodes.Add(node);
 
@@ -201,18 +208,34 @@ namespace Data_Structure {
         {
             if (sender is TreeViewItem treeViewItem)
             {
-                string headerText = treeViewItem.Tag.ToString(); //unvollständig
+                string headerText = treeViewItem.Tag.ToString();
                 // Logik
                 SelectNode(treeViewItem);
 
                 // if-else just for testing
-                if (headerText != null)
-                {
-                    Controller.WriteToLog(headerText);
+                if (headerText != null) {
+                    Controller.WriteToLog("Selecting Node: " + headerText);
                 }
-                else
-                {
+                else {
                     Controller.WriteToLog("no HeaderText found");
+                }
+            }
+        }
+
+        private static void TreeViewItem_MouseDouble(object sender, MouseEventArgs e) {
+            if (sender is TreeViewItem treeViewItem) {
+                if (!ImageViewerOpen) {
+                    SelectNode(treeViewItem);
+                    ImageViewer = new(currentNode);
+                    ImageViewer.Show();
+                    ImageViewerOpen = true;
+                    Controller.WriteToLog("Opening Image Viewer on Node " + currentNode.nodeId);
+                } else {
+                    SelectNode(treeViewItem);
+                    ImageViewer.LoadNode(currentNode);
+                    ImageViewer.Topmost = true;
+                    ImageViewer.Topmost = false;
+                    Controller.WriteToLog("Loading Node " + currentNode.nodeId + " in Image Viewer");
                 }
             }
         }
