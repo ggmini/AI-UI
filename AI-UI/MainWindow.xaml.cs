@@ -3,6 +3,7 @@ using System;
 using Data_Structure;
 using System.Collections.Generic;
 using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Input;
 
 namespace AI_UI {
@@ -76,23 +77,16 @@ namespace AI_UI {
             ProgressBar.Value = value;
         }
 
-
-
-
-
-
-
-
-
-
-
-
         private void Path_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             GenerateButton.IsEnabled = false;
 
+            //If Resolution Boxes are empty, use default
+            if (Int32.TryParse(WidthBox.Text, out int width)) width = 512;
+            if (Int32.TryParse(HeightBox.Text, out int height)) width = 512;
+
             StableInterface.GenerateTxt2Img(PromptBox.Text, NegativePromptBox.Text, (long)SeedBox.Value, (int)StepsSlider.Value, (int)BatchSizeSlider.Value,
-                Convert.ToInt32(WidthBox.Text), Convert.ToInt32(HeightBox.Text));
+                width, height);
 
         }
 

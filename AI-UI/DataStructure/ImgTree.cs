@@ -72,15 +72,6 @@ namespace Data_Structure {
             } nodes.Add(currentNode);
         }
 
-        /// <summary>
-        /// Select Node in Tree
-        /// </summary>
-        /// <param name="nodeId"></param>
-        //public static void SelectNode(int nodeId) {
-        //    currentNode = nodes[nodeId];
-        //}
-        // ----vorübergehend ersetzt
-
         
         /// <summary>
         /// Save a New Batch of Images
@@ -112,7 +103,7 @@ namespace Data_Structure {
                 countImgId++;
                 Controller.WriteToLog("Image Id Increased to " + countImgId);
             }
-            //PopulateTreeView();
+            PopulateTreeView();
         }
 
         /// <summary>
@@ -139,58 +130,63 @@ namespace Data_Structure {
         }
 
 
-        //public static void PopulateTreeView()
-        //{
-        //    Application.Current.Dispatcher.Invoke((Action)delegate
-        //    {
-        //        MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
+        public static void PopulateTreeView()
+        {
+            Application.Current.Dispatcher.Invoke((Action)delegate
+            {
+                MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
 
-        //        TreeView treeView = mainWindow.treeView;
+                TreeView treeView = mainWindow.treeView;
 
-        //        treeView.Items.Clear();
+                treeView.Items.Clear();
 
-        //        List<ImgNode> addedNodes = new List<ImgNode>();
+                List<ImgNode> addedNodes = new List<ImgNode>();
 
-        //        foreach (var node in ImgTree.Nodes)
-        //        {
-        //            if (!addedNodes.Contains(node))
-        //            {
-        //                TreeViewItem treeNode = CreateTreeViewItem(node, addedNodes);
-        //                treeView.Items.Add(treeNode);
-        //            }
-        //        }
-        //    });
-        //}
+                foreach (var node in ImgTree.Nodes)
+                {
+                    if (!addedNodes.Contains(node))
+                    {
+                        TreeViewItem treeNode = CreateTreeViewItem(node, addedNodes);
+                        treeView.Items.Add(treeNode);
+                    }
+                }
+            });
+        }
 
         public static TreeViewItem CreateTreeViewItem(ImgNode node, List<ImgNode> addedNodes)
         {
-            TreeViewItem treeNode = new TreeViewItem { Header = $"Node {node.nodeId}", Tag = node.nodeId.ToString(), IsExpanded = true };
+            StackPanel stackPanel = new StackPanel { Orientation = Orientation.Horizontal };
+            Image image = new Image {
+                Source = new BitmapImage(new Uri(Path.GetFullPath($"output\\{currentTreeName}\\{node.imgId[0]}.png"))),
+                    Height = 50
+            };
+            stackPanel.Children.Add(image);
+            TreeViewItem treeNode = new TreeViewItem() { Header = stackPanel, Tag = node.nodeId.ToString(), IsExpanded = true };
             treeNode.PreviewMouseLeftButtonDown += TreeViewItem_MouseUp;
 
             addedNodes.Add(node);
 
-            foreach (var item in node.imgId)
+
+
+            /*foreach (var item in node.imgId)
             {
                 //// Image:
 
-                //Image image = new Image
-                //{
-                //    Source = new BitmapImage(new Uri(Path.GetFullPath("output\\zoo\\0.png"))), //(ToDo: Image-path must be retreived)
-                //    Height = 20
-                //};
+                Image image = new Image {
+                    Source = new BitmapImage(new Uri(Path.GetFullPath($"output\\{currentTreeName}\\{node.nodeId}.png"))), //(ToDo: Image-path must be retreived)
+                    Height = 20
+                };
 
                 //// StackPanel to hold the TextBlock and Image
-                //StackPanel stackPanel = new StackPanel { Orientation = Orientation.Horizontal };
+                StackPanel stackPanel = new StackPanel { Orientation = Orientation.Horizontal };
                 //// TextBlock for the header text
-                //TextBlock textBlock = new TextBlock { Text = $"Item {item}" };
+                TextBlock textBlock = new TextBlock { Text = $"Item {item}" };
 
-                //stackPanel.Children.Add(textBlock);
-                //stackPanel.Children.Add(image);
-                ////
-                string stackPanel = $"Item {item}"; // Platzhalter
+                stackPanel.Children.Add(textBlock);
+                stackPanel.Children.Add(image);
 
                 treeNode.Items.Add(new TreeViewItem { Header = stackPanel, Tag = item.ToString() });
-            }
+            }*/
 
             foreach (var childNode in node.children)
             {
@@ -205,7 +201,7 @@ namespace Data_Structure {
         {
             if (sender is TreeViewItem treeViewItem)
             {
-                string headerText = treeViewItem.Header.ToString(); //unvollständig
+                string headerText = treeViewItem.Tag.ToString(); //unvollständig
                 // Logik
                 SelectNode(treeViewItem);
 
@@ -221,8 +217,7 @@ namespace Data_Structure {
             }
         }
 
-        // set via onClick
-        public static ImgNode SelectNode(TreeViewItem treeViewItem)
+        public static ImgNode SelectNode(TreeViewItem treeViewItem)// set via onClick
         {
             string searchedIdString = "0";
             if (treeViewItem.Tag is string s)
