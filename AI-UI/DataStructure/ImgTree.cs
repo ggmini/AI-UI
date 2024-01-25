@@ -21,9 +21,6 @@ namespace Data_Structure {
         private static List<ImgNode> nodes;
         public static List<ImgNode> Nodes { get => nodes; }
 
-        public static ImageViewer ImageViewer;
-        public static bool ImageViewerOpen = false;
-
         /// <summary>
         /// Create New Tree
         /// </summary>
@@ -227,19 +224,10 @@ namespace Data_Structure {
 
         private static void TreeViewItem_MouseDouble(object sender, MouseEventArgs e) {
             if (sender is TreeViewItem treeViewItem) {
-                if (!ImageViewerOpen) {
-                    SelectNode(treeViewItem);
-                    ImageViewer = new(currentNode);
-                    ImageViewer.Show();
-                    ImageViewerOpen = true;
-                    Controller.WriteToLog("Opening Image Viewer on Node " + currentNode.nodeId);
-                } else {
-                    SelectNode(treeViewItem);
-                    ImageViewer.LoadNode(currentNode);
-                    ImageViewer.Topmost = true;
-                    ImageViewer.Topmost = false;
-                    Controller.WriteToLog("Loading Node " + currentNode.nodeId + " in Image Viewer");
-                }
+                SelectNode(treeViewItem);
+                MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
+                mainWindow.OpenNode(currentNode);
+                
             }
         }
 
