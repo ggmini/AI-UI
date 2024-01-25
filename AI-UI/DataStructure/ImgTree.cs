@@ -7,6 +7,7 @@ using System.Windows.Controls;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
+using System.Windows.Media;
 
 namespace Data_Structure {
     public static class ImgTree {
@@ -165,6 +166,8 @@ namespace Data_Structure {
                     Height = 100
             };
             stackPanel.Children.Add(image);
+            if (node.imgId.Count > 1) stackPanel.Children.Add(new TextBlock { Text = $"+{node.imgId.Count - 1}", FontSize = 36,
+                VerticalAlignment = VerticalAlignment.Center, Foreground = new SolidColorBrush(Colors.White), Margin = new Thickness(10, 0, 10, 0) });
             TreeViewItem treeNode = new TreeViewItem() { Header = stackPanel, Tag = node.nodeId.ToString(), IsExpanded = true };
 
             //These Events execute for all parent nodes as well...this element executes last so it's still working as intended

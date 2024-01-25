@@ -2,7 +2,8 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="ImageViwer" Height="700" Width="1000"
-        Closing="OnClose">
+        Closing="OnClose"
+        Background="#00141B">
     <Grid RenderTransformOrigin="0.498,0.622">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -18,6 +19,6 @@
                 Click="NextClick"/>
         <Button Name="BackButton" Grid.Row="1" Grid.Column="0" Content="Back" FontSize="40" Height="100" VerticalAlignment="Bottom"
                 Click="BackClick"/>
-        <TextBlock Name="ImageInfo" Grid.Row="1" Grid.Column="1" Margin="5,5,5,5" TextWrapping="Wrap"/>
+        <TextBlock Name="ImageInfo" Grid.Row="1" Grid.Column="1" Margin="5,5,5,5" TextWrapping="Wrap" Foreground="#B1D4DF"/>
     </Grid>
 </Window>
