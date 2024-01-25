@@ -22,6 +22,8 @@ namespace AI_UI {
             //Create and Open Log Window
             log = new();
             log.Show();
+            Topmost = true;
+            Topmost = false;
 
             Controller.SetLog(log);
 

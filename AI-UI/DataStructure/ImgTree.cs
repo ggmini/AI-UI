@@ -233,7 +233,8 @@ namespace Data_Structure {
                 } else {
                     SelectNode(treeViewItem);
                     ImageViewer.LoadNode(currentNode);
-                    ImageViewer.Show();
+                    ImageViewer.Topmost = true;
+                    ImageViewer.Topmost = false;
                     Controller.WriteToLog("Loading Node " + currentNode.nodeId + " in Image Viewer");
                 }
             }
