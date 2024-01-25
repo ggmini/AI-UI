@@ -33,7 +33,7 @@ namespace AI_UI {
 
         void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
             ImgTree.SaveTree();
-            if(ImgTree.ImageViewerOpen != true) ImgTree.ImageViewer.Close();
+            if(ImgTree.ImageViewerOpen) ImgTree.ImageViewer.Close();
             log.SaveLog();
             log.Close();
         }
