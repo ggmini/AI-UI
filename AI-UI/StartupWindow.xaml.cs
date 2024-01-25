@@ -72,6 +72,7 @@ namespace AI_UI {
 
         void BackToNewOrLoad(object sender, RoutedEventArgs e) {
             NewGrid.Visibility = Visibility.Hidden;
+            LoadGrid.Visibility = Visibility.Hidden;
             NewOrLoadGrid.Visibility = Visibility.Visible;
         }
 

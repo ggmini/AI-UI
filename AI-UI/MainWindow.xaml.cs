@@ -58,15 +58,17 @@ namespace AI_UI {
         {
             GenerateButton.IsEnabled = false;
 
-            //If Resolution Boxes are empty, use default
-            int width;
-            int height;            
-            if (!Int32.TryParse(WidthBox.Text, out width)) width = 512;
-            if (!Int32.TryParse(HeightBox.Text, out height)) height = 512;
+            //If Resolution Boxes are empty, use default      
+            if (!Int32.TryParse(WidthBox.Text, out int width)) width = 512;
+            if (!Int32.TryParse(HeightBox.Text, out int height)) height = 512;
+            string prompt;
+            string negativePrompt;
+            if (PromptBox.Text == "Prompt") prompt = "";
+            else prompt = PromptBox.Text;
+            if (NegativePromptBox.Text == "Negative Prompt") negativePrompt = "";
+            else negativePrompt = NegativePromptBox.Text;
 
-            StableInterface.GenerateTxt2Img(PromptBox.Text, NegativePromptBox.Text, (long)SeedBox.Value, (int)StepsSlider.Value, (int)BatchSizeSlider.Value,
-                width, height);
-
+            StableInterface.GenerateTxt2Img(prompt, negativePrompt, (long)SeedBox.Value, (int)StepsSlider.Value, (int)BatchSizeSlider.Value, width, height);
         }
 
 
