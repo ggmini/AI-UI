@@ -82,8 +82,10 @@ namespace AI_UI {
             GenerateButton.IsEnabled = false;
 
             //If Resolution Boxes are empty, use default
-            if (Int32.TryParse(WidthBox.Text, out int width)) width = 512;
-            if (Int32.TryParse(HeightBox.Text, out int height)) width = 512;
+            int width;
+            int height;
+            if (Int32.TryParse(WidthBox.Text, out width)) width = 512;
+            if (Int32.TryParse(HeightBox.Text, out height)) width = 512;
 
             StableInterface.GenerateTxt2Img(PromptBox.Text, NegativePromptBox.Text, (long)SeedBox.Value, (int)StepsSlider.Value, (int)BatchSizeSlider.Value,
                 width, height);
