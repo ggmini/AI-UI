@@ -23,7 +23,7 @@
             </StatusBarItem>
             <Separator Grid.Column="1" />
             <StatusBarItem Grid.Column="2">
-                <ProgressBar Name="ProgressBar" Height="20" Width="317"></ProgressBar>
+                <ProgressBar Name="ProgressBar" Height="20" Width="692"></ProgressBar>
             </StatusBarItem>
         </StatusBar>
         <!--#endregion-->
