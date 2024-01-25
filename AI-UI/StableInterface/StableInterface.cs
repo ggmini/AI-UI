@@ -134,6 +134,13 @@ namespace  AI_UI{
                 Application.Current.Dispatcher.Invoke(() => Controller.WriteToLog("Request Finished with " + (int)result.StatusCode + " " + result.StatusCode));
                 Application.Current.Dispatcher.Invoke(() => _main.ChangeStatusMessage("Generation Completed"));
                 if (result.ReasonPhrase != null) Application.Current.Dispatcher.Invoke(() => Controller.WriteToLog(result.ReasonPhrase));
+                if(result.StatusCode == System.Net.HttpStatusCode.InternalServerError) { //Check there wasn't an error in the WebUI
+                    status = State.Inactive;
+                    MessageBox.Show("Internal Server Error\nCheck your Inputs or the WebUI logs", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    Application.Current.Dispatcher.Invoke(() => _main.ChangeStatusMessage("Ready"));
+                    Application.Current.Dispatcher.Invoke(() => _main.GenerateButton.IsEnabled = true);
+                    return;
+                }
 
                 //Deserialize Response
                 string responseBody = await result.Content.ReadAsStringAsync();

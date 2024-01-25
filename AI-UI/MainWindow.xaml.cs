@@ -33,32 +33,9 @@ namespace AI_UI {
 
         void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
             ImgTree.SaveTree();
+            ImgTree.ImageViewer.Close();
             log.SaveLog();
             log.Close();
-        }
-
-        /// <summary>
-        /// Called when Steps Slider is moved
-        /// </summary>
-        //void StepsSlider_Changed(object sender, RoutedPropertyChangedEventArgs<double> e) {
-        //    StepsText.Text = "Steps: " + e.NewValue.ToString();
-        //}
-
-        /// <summary>
-        /// Called when Batch Size Slider is moved
-        /// </summary>
-        //void BatchSizeSlider_Changed(object sender, RoutedPropertyChangedEventArgs<double> e) {
-        //    BatchSizeText.Text = "Batch Size: " + e.NewValue.ToString();
-        //}
-
-        /// <summary>
-        /// Called when Generate Button is clicked
-        /// </summary>
-        void Generate_Click(object sender, RoutedEventArgs e) {
-            GenerateButton.IsEnabled = false;
-
-            StableInterface.GenerateTxt2Img(PromptBox.Text, NegativePromptBox.Text, (long)SeedBox.Value, (int)StepsSlider.Value, (int)BatchSizeSlider.Value,
-                Convert.ToInt32(WidthBox.Text), Convert.ToInt32(HeightBox.Text));
         }
 
         /// <summary>
@@ -82,8 +59,10 @@ namespace AI_UI {
             GenerateButton.IsEnabled = false;
 
             //If Resolution Boxes are empty, use default
-            if (Int32.TryParse(WidthBox.Text, out int width)) width = 512;
-            if (Int32.TryParse(HeightBox.Text, out int height)) width = 512;
+            int width;
+            int height;            
+            if (!Int32.TryParse(WidthBox.Text, out width)) width = 512;
+            if (!Int32.TryParse(HeightBox.Text, out height)) height = 512;
 
             StableInterface.GenerateTxt2Img(PromptBox.Text, NegativePromptBox.Text, (long)SeedBox.Value, (int)StepsSlider.Value, (int)BatchSizeSlider.Value,
                 width, height);

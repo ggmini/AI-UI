@@ -1,5 +1,6 @@
 ﻿using Data_Structure;
 using Microsoft.Win32;
+using System;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
@@ -39,7 +40,9 @@ namespace AI_UI {
             //Let User Select File
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.ShowDialog();
-            ImgTree.LoadTree(File.OpenText(ofd.FileName)); //Open File and Pass Stream Reader to ImgTree
+            try {
+                ImgTree.LoadTree(File.OpenText(ofd.FileName)); //Open File and Pass Stream Reader to ImgTree
+            } catch (ArgumentException) { return; } //if user closes file dialog return to menu
 
             //Open MainWindow
             MainWindow main = new();
