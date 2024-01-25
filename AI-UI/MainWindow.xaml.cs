@@ -1,9 +1,7 @@
 ﻿using System.Windows;
 using System;
 using Data_Structure;
-using System.Collections.Generic;
 using System.Windows.Controls;
-using System.Windows.Media;
 using System.Windows.Input;
 
 namespace AI_UI {
@@ -35,7 +33,7 @@ namespace AI_UI {
 
         void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
             ImgTree.SaveTree();
-            ImgTree.ImageViewer.Close();
+            if(ImgTree.ImageViewerOpen != true) ImgTree.ImageViewer.Close();
             log.SaveLog();
             log.Close();
         }
