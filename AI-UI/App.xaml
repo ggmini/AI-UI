@@ -3,9 +3,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              StartupUri="StartupWindow.xaml">
     <Application.Resources>
+        <FontFamily x:Key="Fonts\Dosis-Regular.ttf">C:\Users\tobi\source\repos\ai-ui-local2\AI-UI\Fonts\Dosis-Regular.ttf#Dosis</FontFamily>
         <Style TargetType="{x:Type Button}">
             <Setter Property="Background" Value="#FFA500" />
             <Setter Property="Foreground" Value="#013343" />
         </Style>
+        <BitmapImage x:Key="AI-UI_logo" UriSource="images\AI-UI_logo.png"></BitmapImage>
+        <BitmapImage x:Key="dice" UriSource="images\dice.png"></BitmapImage>
+        <BitmapImage x:Key="Zahnrad" UriSource="images\Zahnrad.png"></BitmapImage>
     </Application.Resources>
 </Application>
+

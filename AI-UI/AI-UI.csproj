@@ -10,7 +10,20 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Fonts\Dosis-Regular.ttf" />
+    <None Remove="images\AI-UI_logo.png" />
+    <None Remove="images\dice.png" />
+    <None Remove="images\Zahnrad.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="Assets\app.ico" />
+    <Resource Include="Fonts\Dosis-Regular.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\AI-UI_logo.png" />
+    <Resource Include="images\dice.png" />
+    <Resource Include="images\Zahnrad.png" />
   </ItemGroup>
 
 </Project>

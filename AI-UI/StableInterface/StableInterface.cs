@@ -52,7 +52,16 @@ namespace  AI_UI{
         /// <param name="batch_size">How many images should be generated</param>
         /// <param name="width">Image width in pixels</param>
         /// <param name="height">Image height in pixels</param>
-        public static void GenerateTxt2Img(string prompt, string negativePrompt, long seed, int steps, int batch_size, int width, int height) {
+        public static void GenerateTxt2Img(string prompt, string prompt2, string negativePrompt, string negativePrompt2, int seed, int steps, int batch_size, int width, int height)
+        {
+            if (prompt2 != "Prompt")
+            {
+                prompt = MergePrompts(prompt, prompt2);
+            }
+            if (negativePrompt2 != "Negative Prompt")
+            {
+                negativePrompt = MergePrompts(negativePrompt, negativePrompt2);
+            }
             RequestStruct requestStruct = new() {
                 prompt = prompt,
                 negative_prompt = negativePrompt,
@@ -66,6 +75,14 @@ namespace  AI_UI{
             BackgroundWorker worker = new BackgroundWorker();
             worker.DoWork += GenerateWork;
             worker.RunWorkerAsync(requestStruct);
+        }
+
+        public static string MergePrompts(string prompt1, string prompt2)
+        {
+            return $"({prompt1}:1), ({prompt2}:0.00000001)";
+
+            //also good but different:
+            //return $"[{prompt1}: {prompt2}: 0.1]";
         }
 
         /// <summary>

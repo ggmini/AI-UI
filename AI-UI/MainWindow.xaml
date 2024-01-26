@@ -72,7 +72,7 @@
                     </Path>
                     <Path Fill="#D9D9D9">
                         <Path.Data>
-                            <RectangleGeometry Rect="698,326,57,30" RadiusX="10" RadiusY="10"/>
+                            <RectangleGeometry Rect="636,326,119,30" RadiusX="10" RadiusY="10"/>
                         </Path.Data>
                     </Path>
                     <!--20 Sampling Steps-->
@@ -83,7 +83,7 @@
                     </Path>
                     <Path Fill="#D9D9D9">
                         <Path.Data>
-                            <RectangleGeometry Rect="698,411,57,30" RadiusX="10" RadiusY="10"/>
+                            <RectangleGeometry Rect="636,411,119,30" RadiusX="10" RadiusY="10"/>
                         </Path.Data>
                     </Path>
                     <!--4 Batch Count-->
@@ -94,14 +94,39 @@
                     </Path>
                     <Path Fill="#D9D9D9">
                         <Path.Data>
-                            <RectangleGeometry Rect="698,496,57,30" RadiusX="10" RadiusY="10"/>
+                            <RectangleGeometry Rect="636,496,119,30" RadiusX="10" RadiusY="10"/>
                         </Path.Data>
                     </Path>
                     <!--2 Seeds-->
                     <Path Fill="#D9D9D9">
                         <Path.Data>
-                            <RectangleGeometry Rect="649,496,39,30" RadiusX="10" RadiusY="10"/>
+                            <RectangleGeometry Rect="588,496,39,30" RadiusX="10" RadiusY="10"/>
                         </Path.Data>
+                        <Path.Style>
+                            <Style TargetType="Path">
+                                <EventSetter Event="MouseLeftButtonDown" Handler="PathRandom_MouseLeftButtonDown"/>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Fill" Value="#e8e8e8"/>
+                                        <!-- Set the hover color for the gray object -->
+                                    </Trigger>
+                                    <EventTrigger RoutedEvent="MouseEnter">
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <ColorAnimation Storyboard.TargetProperty="(Path.Fill).(SolidColorBrush.Color)" To="#B1D4DF" Duration="0:0:0.1"/>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </EventTrigger>
+                                    <EventTrigger RoutedEvent="MouseLeave">
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <ColorAnimation Storyboard.TargetProperty="(Path.Fill).(SolidColorBrush.Color)" To="#D9D9D9" Duration="0:0:0.1"/>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </EventTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Path.Style>
                     </Path>
                     <Path>
                         <!--<Path.Fill/>-->
@@ -141,9 +166,9 @@
                     </Path>
                     <!--Negative Prompt-->
                     <Path Fill="#014F67" Data="M151 5H286V17.2C286 27.2706 286 32.3059 284.228 36.2303C282.224 40.669 278.669 44.2239 274.23 46.2281C270.306 48 265.271 48 255.2 48H151V5Z"/>
-                    <TextBlock x:Name="nodeName" Text="XXX1" FontFamily="Dosis" FontSize="24" Foreground="White" Background="Transparent" HorizontalAlignment="Left" Canvas.Left="175" Canvas.Top="2" VerticalAlignment="Center"/>
+                    <TextBlock x:Name="nodeName" Text="img1" FontSize="24" Foreground="White" Background="Transparent" HorizontalAlignment="Left" Canvas.Left="175" Canvas.Top="2" VerticalAlignment="Center"/>
                     <Path Fill="#014F67" Data="M492 0H627V12.2C627 22.2706 627 27.3059 625.228 31.2303C623.224 35.669 619.669 39.2239 615.23 41.2281C611.306 43 606.271 43 596.2 43H522.8C512.729 43 507.694 43 503.77 41.2281C499.331 39.2239 495.776 35.669 493.772 31.2303C492 27.3059 492 22.2706 492 12.2V0Z"/>
-                    <TextBlock x:Name="node2Name" Text="XXX2" FontFamily="Dosis" FontSize="24" Foreground="White" Background="Transparent" HorizontalAlignment="Left" Canvas.Left="514" Canvas.Top="2" VerticalAlignment="Center"/>
+                    <TextBlock x:Name="node2Name" Text="img2" FontSize="24" Foreground="White" Background="Transparent" HorizontalAlignment="Left" Canvas.Left="514" Canvas.Top="2" VerticalAlignment="Center"/>
                     <!--F1.1 F0.2-->
                     <Path Stroke="#CFE2E8">
                         <Path.Data>
@@ -159,40 +184,42 @@
                     </Path>
                     <!--#endregion-->
 
-                    <!--<Image Source="{StaticResource singledice.png}" Height="30" Width="30" Canvas.Left="654" Canvas.Top="496" HorizontalAlignment="Left" VerticalAlignment="Top"/>-->
+                    <Image Source="{StaticResource AI-UI_logo}" Height="112" Width="113" Canvas.Left="19" Canvas.Top="28" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <Image Source="{StaticResource dice}" Height="30" Width="30" Canvas.Left="592" Canvas.Top="496" HorizontalAlignment="Left" VerticalAlignment="Top" IsHitTestVisible="False"/>
+                    <Image Source="{StaticResource Zahnrad}" Height="23" Width="23" Canvas.Left="23" Canvas.Top="1030" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
 
                     <!--#region Text, Buttons and Sliders-->
 
                     <!--Prompt-->
-                    <TextBox Name="PromptBox" Text="Prompt" Tag="Prompt" FontFamily="Dosis" FontSize="20" Foreground="#B1D4DF" Background="Transparent" BorderBrush="Transparent" Canvas.Left="184" Canvas.Top="63" Height="103" Width="228" TextWrapping="Wrap" GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus"/>
-                    <TextBox Name="PromptBox2" Text="Prompt" Tag="Prompt" FontFamily="Dosis" FontSize="20" Foreground="#B1D4DF" Background="Transparent" BorderBrush="Transparent" Canvas.Left="523" Canvas.Top="63" Height="103" Width="228" TextWrapping="Wrap" GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus"/>
-                    <TextBox Name="NegativePromptBox" Text="Negative Prompt" Tag="Negative Prompt" FontFamily="Dosis" FontSize="20" Foreground="#B1D4DF" Background="Transparent" BorderBrush="Transparent" Canvas.Left="184" Canvas.Top="186" Height="103" Width="228" TextWrapping="Wrap" GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus"/>
-                    <TextBox Name="NegativePromptBox2" Text="Negative Prompt" Tag="Negative Prompt" FontFamily="Dosis" FontSize="20" Foreground="#B1D4DF" Background="Transparent" BorderBrush="Transparent" Canvas.Left="523" Canvas.Top="186" Height="103" Width="228" TextWrapping="Wrap" GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus"/>
+                    <TextBox Name="PromptBox" Text="Prompt" Tag="Prompt" FontFamily="/AI-UI;component/Fonts/Dosis-Regular.ttf#Dosis-Regular" FontSize="20" Foreground="#B1D4DF" Background="Transparent" BorderBrush="Transparent" Canvas.Left="184" Canvas.Top="63" Height="103" Width="228" TextWrapping="Wrap" GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus"/>
+                    <TextBox Name="PromptBox2" Text="Prompt" Tag="Prompt" FontFamily="/AI-UI;component/Fonts/Dosis-Regular.ttf#Dosis-Regular" FontSize="20" Foreground="#B1D4DF" Background="Transparent" BorderBrush="Transparent" Canvas.Left="523" Canvas.Top="63" Height="103" Width="228" TextWrapping="Wrap" GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus"/>
+                    <TextBox Name="NegativePromptBox" Text="Negative Prompt" Tag="Negative Prompt" FontFamily="/AI-UI;component/Fonts/Dosis-Regular.ttf#Dosis-Regular" FontSize="20" Foreground="#B1D4DF" Background="Transparent" BorderBrush="Transparent" Canvas.Left="184" Canvas.Top="186" Height="103" Width="228" TextWrapping="Wrap" GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus"/>
+                    <TextBox Name="NegativePromptBox2" Text="Negative Prompt" Tag="Negative Prompt" FontFamily="/AI-UI;component/Fonts/Dosis-Regular.ttf#Dosis-Regular" FontSize="20" Foreground="#B1D4DF" Background="Transparent" BorderBrush="Transparent" Canvas.Left="523" Canvas.Top="186" Height="103" Width="228" TextWrapping="Wrap" GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus"/>
                     <!--Sampling Steps-->
-                    <TextBlock Text="Sampling Steps" FontFamily="Dosis" Foreground="#B1D4DF" FontSize="20" Canvas.Left="191" Canvas.Top="328" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <TextBlock Text="Sampling Steps" FontFamily="/AI-UI;component/Fonts/Dosis-Regular.ttf#Dosis-Regular" Foreground="#B1D4DF" FontSize="20" Canvas.Left="191" Canvas.Top="328" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                     <Slider x:Name="StepsSlider" Value="20" Minimum="1" Maximum="150" IsSnapToTickEnabled="True" TickFrequency="1" Canvas.Left="195" Canvas.Top="360" HorizontalAlignment="Center" VerticalAlignment="Center" Width="563"/>
-                    <TextBlock Text="{Binding Value, ElementName=StepsSlider}" FontFamily="Dosis" Foreground="#000000" FontSize="20" TextAlignment="Center" Canvas.Left="704" Canvas.Top="331" HorizontalAlignment="Left" VerticalAlignment="Center" Width="45"/>
+                    <TextBlock Text="{Binding Value, ElementName=StepsSlider}" FontFamily="/AI-UI;component/Fonts/Dosis-Regular.ttf#Dosis-Regular" Foreground="#000000" FontSize="20" TextAlignment="Center" Canvas.Left="642" Canvas.Top="331" HorizontalAlignment="Left" VerticalAlignment="Center" Width="107"/>
                     <!--Batch Count-->
-                    <TextBlock Text="Batch Size" FontFamily="Dosis" Foreground="#B1D4DF" FontSize="20" Canvas.Left="191" Canvas.Top="412" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <TextBlock Text="Batch Size" FontFamily="/AI-UI;component/Fonts/Dosis-Regular.ttf#Dosis-Regular" Foreground="#B1D4DF" FontSize="20" Canvas.Left="191" Canvas.Top="412" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                     <Slider x:Name="BatchSizeSlider" Value="1" Minimum="1" Maximum="8" IsSnapToTickEnabled="True" TickFrequency="1" Canvas.Left="195" Canvas.Top="445" HorizontalAlignment="Center" VerticalAlignment="Center" Width="563"/>
-                    <TextBlock Text="{Binding Value, ElementName=BatchSizeSlider}" FontFamily="Dosis" Foreground="#000000" FontSize="20" TextAlignment="Center" Canvas.Left="704" Canvas.Top="416" HorizontalAlignment="Left" VerticalAlignment="Center" Width="45"/>
+                    <TextBlock Text="{Binding Value, ElementName=BatchSizeSlider}" FontFamily="/AI-UI;component/Fonts/Dosis-Regular.ttf#Dosis-Regular" Foreground="#000000" FontSize="20" TextAlignment="Center" Canvas.Left="642" Canvas.Top="416" HorizontalAlignment="Left" VerticalAlignment="Center" Width="107"/>
                     <!--Seed-->
-                    <TextBlock Text="Seed" FontFamily="Dosis" Foreground="#B1D4DF" FontSize="20" Canvas.Left="191" Canvas.Top="497" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <TextBlock Text="Seed" FontFamily="/AI-UI;component/Fonts/Dosis-Regular.ttf#Dosis-Regular" Foreground="#B1D4DF" FontSize="20" Canvas.Left="191" Canvas.Top="497" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                     <Slider x:Name="SeedBox" Value="-1" Minimum="-1" Maximum="4294967295" IsSnapToTickEnabled="True" TickFrequency="1" Canvas.Left="195" Canvas.Top="530" HorizontalAlignment="Center" VerticalAlignment="Center" Width="563"/>
-                    <TextBox Text="{Binding Value, ElementName=SeedBox}" FontFamily="Dosis" Foreground="#000000" FontSize="20" TextAlignment="Center" Background="Transparent" BorderBrush="Transparent" TextWrapping="WrapWithOverflow" Canvas.Left="704" Canvas.Top="501" HorizontalAlignment="Left" VerticalAlignment="Center" Width="45"/>
+                    <TextBox Text="{Binding Value, ElementName=SeedBox}" FontFamily="/AI-UI;component/Fonts/Dosis-Regular.ttf#Dosis-Regular" Foreground="#000000" FontSize="20" TextAlignment="Center" Background="Transparent" BorderBrush="Transparent" TextWrapping="WrapWithOverflow" Canvas.Left="636" Canvas.Top="500" HorizontalAlignment="Left" VerticalAlignment="Center" Width="119" TextChanged="TextBox_TextChanged"/>
                     <!--Height & Width-->
-                    <TextBox Name="WidthBox" Text="Width" Tag="Width" FontFamily="Dosis" FontSize="20" Foreground="#B1D4DF" Background="Transparent" BorderBrush="Transparent" Canvas.Left="191" Canvas.Top="593" Height="29" Width="248" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Center" GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus"/>
-                    <TextBox Name="HeightBox" Text="Height" Tag="Height" FontFamily="Dosis" FontSize="20" Foreground="#B1D4DF" Background="Transparent" BorderBrush="Transparent" Canvas.Left="513" Canvas.Top="593" Height="29" Width="248" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Center" GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus"/>
+                    <TextBox Name="WidthBox" Text="Width" Tag="Width" FontFamily="/AI-UI;component/Fonts/Dosis-Regular.ttf#Dosis-Regular" FontSize="20" Foreground="#B1D4DF" Background="Transparent" BorderBrush="Transparent" Canvas.Left="191" Canvas.Top="593" Height="29" Width="248" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Center" GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus"/>
+                    <TextBox Name="HeightBox" Text="Height" Tag="Height" FontFamily="/AI-UI;component/Fonts/Dosis-Regular.ttf#Dosis-Regular" FontSize="20" Foreground="#B1D4DF" Background="Transparent" BorderBrush="Transparent" Canvas.Left="513" Canvas.Top="593" Height="29" Width="248" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Center" GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus"/>
                     <!--More Settings-->
-                    <TextBlock Name="MoreSetings" Text="More Settings" FontFamily="Dosis" FontSize="20" Foreground="#CFE2E8" Background="Transparent" Canvas.Left="415" Canvas.Top="661" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <TextBlock Name="MoreSetings" Text="More Settings" FontFamily="/AI-UI;component/Fonts/Dosis-Regular.ttf#Dosis-Regular" FontSize="20" Foreground="#CFE2E8" Background="Transparent" Canvas.Left="415" Canvas.Top="661" HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
                     <!--Sidebar-->
-                    <TextBlock Text="txt2img" FontFamily="Dosis" Foreground="#F48D14" FontSize="20" Height="24" Canvas.Left="45" Canvas.Top="165" HorizontalAlignment="Left" VerticalAlignment="Center" Width="105"/>
-                    <TextBlock Text="img2img" FontFamily="Dosis" Foreground="#808080" FontSize="20" Height="24" Canvas.Left="45" Canvas.Top="215" HorizontalAlignment="Left" VerticalAlignment="Center" Width="105"/>
-                    <TextBlock Text="extra" FontFamily="Dosis" Foreground="#808080" FontSize="20" Height="24" Canvas.Left="45" Canvas.Top="265" HorizontalAlignment="Left" VerticalAlignment="Center" Width="105"/>
-                    <TextBlock Text="PNG Info" FontFamily="Dosis" Foreground="#808080" FontSize="20" Height="24" Canvas.Left="45" Canvas.Top="315" HorizontalAlignment="Left" VerticalAlignment="Center" Width="105"/>
-                    <TextBlock Text="go back" FontFamily="Dosis" Foreground="#B1D4DF" FontSize="20" Height="24" Canvas.Left="45" Canvas.Top="365" HorizontalAlignment="Left" VerticalAlignment="Center" Width="105"/>
-                    <TextBlock Text="Settings" FontFamily="Dosis" Foreground="#808080" FontSize="20" Height="24" Canvas.Left="52" Canvas.Top="1030" HorizontalAlignment="Left" VerticalAlignment="Center" Width="98"/>
+                    <TextBlock Text="txt2img" FontFamily="/AI-UI;component/Fonts/Dosis-Regular.ttf#Dosis-Regular" Foreground="#F48D14" FontSize="20" Height="24" Canvas.Left="45" Canvas.Top="165" HorizontalAlignment="Left" VerticalAlignment="Center" Width="105"/>
+                    <TextBlock Text="img2img" FontFamily="/AI-UI;component/Fonts/Dosis-Regular.ttf#Dosis-Regular" Foreground="#808080" FontSize="20" Height="24" Canvas.Left="45" Canvas.Top="215" HorizontalAlignment="Left" VerticalAlignment="Center" Width="105"/>
+                    <TextBlock Text="extra" FontFamily="/AI-UI;component/Fonts/Dosis-Regular.ttf#Dosis-Regular" Foreground="#808080" FontSize="20" Height="24" Canvas.Left="45" Canvas.Top="265" HorizontalAlignment="Left" VerticalAlignment="Center" Width="105"/>
+                    <TextBlock Text="PNG Info" FontFamily="/AI-UI;component/Fonts/Dosis-Regular.ttf#Dosis-Regular" Foreground="#808080" FontSize="20" Height="24" Canvas.Left="45" Canvas.Top="315" HorizontalAlignment="Left" VerticalAlignment="Center" Width="105"/>
+                    <TextBlock Text="Settings" FontFamily="/AI-UI;component/Fonts/Dosis-Regular.ttf#Dosis-Regular" Foreground="#808080" FontSize="20" Height="24" Canvas.Left="52" Canvas.Top="1030" HorizontalAlignment="Left" VerticalAlignment="Center" Width="98"/>
 
                     <!--#region GENERATE-Button-->
                     <Path Fill="#F48D14">
@@ -225,11 +252,44 @@
                             </Style>
                         </Path.Style>
                     </Path>
-                    <TextBlock x:Name="GenerateButton" Text="GENERATE" FontFamily="Dosis" FontSize="36" FontWeight="Bold" Foreground="#013343" Background="Transparent" Canvas.Left="377" Canvas.Top="1001" HorizontalAlignment="Left" VerticalAlignment="Top" IsHitTestVisible="False"/>
-                    <!--#endregion-->
+                    <TextBlock x:Name="GenerateButton" Text="GENERATE" FontSize="36" FontWeight="Bold" Foreground="#013343" Background="Transparent" Canvas.Left="377" Canvas.Top="996" HorizontalAlignment="Left" VerticalAlignment="Top" IsHitTestVisible="False"/>
                     <!--#endregion-->
 
+                    <!--#region back-Button-->
+                    <Path Fill="#00141B" Height="24" Stretch="Fill" Width="106" Canvas.Left="44.722" Canvas.Top="365" HorizontalAlignment="Center" VerticalAlignment="Top">
+                        <Path.Data>
+                            <RectangleGeometry Rect="400,339.399,417,218.101"/>
+                        </Path.Data>
+                        <Path.Style>
+                            <Style TargetType="Path">
+                                <EventSetter Event="MouseLeftButtonDown" Handler="Path_GoBack"/>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Fill" Value="#FFA500"/>
+                                        <!-- Set the hover color for the orange object -->
+                                    </Trigger>
+                                    <EventTrigger RoutedEvent="MouseEnter">
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <ColorAnimation Storyboard.TargetProperty="(Path.Fill).(SolidColorBrush.Color)" To="#FFFF00" Duration="0:0:0.1"/>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </EventTrigger>
+                                    <EventTrigger RoutedEvent="MouseLeave">
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <ColorAnimation Storyboard.TargetProperty="(Path.Fill).(SolidColorBrush.Color)" To="#00141B" Duration="0:0:0.1"/>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </EventTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Path.Style>
+                    </Path>
+                    <TextBlock Text="go back" FontFamily="/AI-UI;component/Fonts/Dosis-Regular.ttf#Dosis-Regular" Foreground="#B1D4DF" FontSize="20" Height="24" Canvas.Left="45" Canvas.Top="365" HorizontalAlignment="Left" VerticalAlignment="Center" Width="105" IsHitTestVisible="False"/>
+                    <!--#endregion-->
 
+                    <!--#endregion-->
                 </Canvas>
             </Viewbox>
             <Grid Name="TreeGrid" Visibility="Visible" Grid.Column="1">

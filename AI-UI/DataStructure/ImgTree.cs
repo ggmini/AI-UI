@@ -247,11 +247,26 @@ namespace Data_Structure {
             Application.Current.Dispatcher.Invoke((Action)delegate
             {
                 MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
-                mainWindow.PromptBox.Text = $"{currentNode.nodeInfo.prompt}";
-                mainWindow.NegativePromptBox.Text = $"{currentNode.nodeInfo.negative_prompt}";
+
+                //if (mainWindow.PromptBox.Text == "Prompt")
+                //{
+                //    mainWindow.PromptBox.Text = $"{currentNode.nodeInfo.prompt}";
+                //    mainWindow.NegativePromptBox.Text = $"{currentNode.nodeInfo.negative_prompt}";
+                //}
+                //else
+                //{
+                //    mainWindow.PromptBox2.Text = $"{currentNode.nodeInfo.prompt}";
+                //    mainWindow.NegativePromptBox2.Text = $"{currentNode.nodeInfo.negative_prompt}";
+                //}
+                //mainWindow.WidthBox.Text = $"{currentNode.nodeInfo.width}";
+                //mainWindow.HeightBox.Text = $"{currentNode.nodeInfo.height}";
+ 
+                    mainWindow.PromptBox.Text = $"{currentNode.nodeInfo.prompt}";
+                    mainWindow.NegativePromptBox.Text = $"{currentNode.nodeInfo.negative_prompt}";
                 mainWindow.WidthBox.Text = $"{currentNode.nodeInfo.width}";
                 mainWindow.HeightBox.Text = $"{currentNode.nodeInfo.height}";
             });
+
                         
             return currentNode;
             //}

@@ -72,9 +72,24 @@ namespace AI_UI {
             if (NegativePromptBox.Text == "Negative Prompt") negativePrompt = "";
             else negativePrompt = NegativePromptBox.Text;
 
-            StableInterface.GenerateTxt2Img(prompt, negativePrompt, (long)SeedBox.Value, (int)StepsSlider.Value, (int)BatchSizeSlider.Value, width, height);
+            StableInterface.GenerateTxt2Img(PromptBox.Text, PromptBox2.Text, NegativePromptBox.Text, NegativePromptBox2.Text, (int)SeedBox.Value, (int)StepsSlider.Value, (int)BatchSizeSlider.Value,
+                       width, height);
         }
 
+        private void PathRandom_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            //GenerateButton.IsEnabled = false; <---- durch Bild ersetzen
+
+            SeedBox.Value = -1;
+        }
+
+        private void Path_GoBack(object sender, MouseButtonEventArgs e)
+        {
+            StartupWindow startupWindow = new StartupWindow();
+            startupWindow.Show();
+            App.Current.MainWindow = startupWindow;
+            Close();
+        }
 
 
         private void TextBox_GotFocus(object sender, RoutedEventArgs e)
@@ -153,6 +168,11 @@ namespace AI_UI {
 
         void BackToTreeButton_Click(object sender, RoutedEventArgs e) {
             CloseNode();
+        }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
         }
     }
 }
