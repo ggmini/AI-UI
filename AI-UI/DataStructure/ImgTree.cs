@@ -242,6 +242,7 @@ namespace Data_Structure {
             // wohl besser mit try catch
             //if (currentNode != null && nodeId >= 0 && nodeId < nodes.Count)
             //{
+            try{ 
             currentNode = nodes[searchedId];
 
             Application.Current.Dispatcher.Invoke((Action)delegate
@@ -269,9 +270,8 @@ namespace Data_Structure {
 
                         
             return currentNode;
-            //}
-
-            //return null;
+            }
+            catch (Exception ex) { return null; }
         }
     }
 }
