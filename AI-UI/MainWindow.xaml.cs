@@ -17,7 +17,6 @@ namespace AI_UI {
         
         //Reference to Loggin Window
         LogWindow log;
-        public LogWindow Log { get => log; }
 
         public MainWindow() {
             InitializeComponent();
@@ -36,6 +35,9 @@ namespace AI_UI {
             ChangeStatusMessage("Ready...");
         }
 
+        /// <summary>
+        /// Automatically save log and tree when closing application
+        /// </summary>
         void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
             ImgTree.SaveTree();
             log.SaveLog();
@@ -58,33 +60,47 @@ namespace AI_UI {
             ProgressBar.Value = value;
         }
 
-        private void Path_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
+        /// <summary>
+        /// Generates new images with current prompts
+        /// </summary>
+        private void Path_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) {
             GenerateButton.IsEnabled = false;
 
             //If Resolution Boxes are empty, use default      
             if (!Int32.TryParse(WidthBox.Text, out int width)) width = 512;
             if (!Int32.TryParse(HeightBox.Text, out int height)) height = 512;
+            //Assuming that no user would use the prompts "Prompt" and "Negative Prompt"
+            //Replace these with an empty string as these would appear when user has not entered a prompt
             string prompt;
+            string prompt2;
             string negativePrompt;
+            string negativePrompt2;
             if (PromptBox.Text == "Prompt") prompt = "";
             else prompt = PromptBox.Text;
             if (NegativePromptBox.Text == "Negative Prompt") negativePrompt = "";
             else negativePrompt = NegativePromptBox.Text;
+            if (PromptBox2.Text == "Prompt") prompt2 = "";
+            else prompt2 = PromptBox2.Text;
+            if (NegativePromptBox2.Text == "Negative Prompt") negativePrompt2 = "";
+            else negativePrompt2 = NegativePromptBox2.Text;
 
-            StableInterface.GenerateTxt2Img(PromptBox.Text, PromptBox2.Text, NegativePromptBox.Text, NegativePromptBox2.Text, (int)SeedBox.Value, (int)StepsSlider.Value, (int)BatchSizeSlider.Value,
+            StableInterface.GenerateTxt2Img(prompt, prompt2, negativePrompt, negativePrompt2, (int)SeedBox.Value, (int)StepsSlider.Value, (int)BatchSizeSlider.Value,
                        width, height);
         }
 
-        private void PathRandom_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
+        /// <summary>
+        /// Randomize the seed
+        /// </summary>
+        private void PathRandom_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) {
             //GenerateButton.IsEnabled = false; <---- durch Bild ersetzen
 
             SeedBox.Value = -1;
         }
 
-        private void Path_GoBack(object sender, MouseButtonEventArgs e)
-        {
+        /// <summary>
+        /// Close this Window and return to Startup Window
+        /// </summary>
+        private void Path_GoBack(object sender, MouseButtonEventArgs e) {
             StartupWindow startupWindow = new StartupWindow();
             startupWindow.Show();
             App.Current.MainWindow = startupWindow;

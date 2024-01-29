@@ -30,7 +30,6 @@ namespace  AI_UI{
         /// Initializes the Stable Diffusion Interface
         /// </summary>
         /// <param name="main">Current Main Window</param>
-        /// <param name="log">Current Log Window</param>
         public static void Initialize(MainWindow main) {
             //Create new HTTP Client
             client = new HttpClient();
@@ -52,16 +51,15 @@ namespace  AI_UI{
         /// <param name="batch_size">How many images should be generated</param>
         /// <param name="width">Image width in pixels</param>
         /// <param name="height">Image height in pixels</param>
-        public static void GenerateTxt2Img(string prompt, string prompt2, string negativePrompt, string negativePrompt2, int seed, int steps, int batch_size, int width, int height)
-        {
-            if (prompt2 != "Prompt")
-            {
+        public static void GenerateTxt2Img(string prompt, string prompt2, string negativePrompt, string negativePrompt2, int seed, int steps, int batch_size, int width, int height) {
+            //Merge Prompts if second prompt is not empty
+            if (prompt2 != "") {
                 prompt = MergePrompts(prompt, prompt2);
             }
-            if (negativePrompt2 != "Negative Prompt")
-            {
+            if (negativePrompt2 != "") {
                 negativePrompt = MergePrompts(negativePrompt, negativePrompt2);
             }
+            //Create Request Structure
             RequestStruct requestStruct = new() {
                 prompt = prompt,
                 negative_prompt = negativePrompt,
@@ -85,6 +83,7 @@ namespace  AI_UI{
             //return $"[{prompt1}: {prompt2}: 0.1]";
         }
 
+        //Has not been integrated as of right now! Could be used to generate Variations of existing images
         /// <summary>
         /// Generate new Image using img2img
         /// </summary>
@@ -172,7 +171,7 @@ namespace  AI_UI{
             } catch (HttpRequestException) {
                 MessageBox.Show("Could not connect to Stable Diffusion. Is the WebUI running?", "Error", MessageBoxButton.OK, MessageBoxImage.Error); //Show Error Message if couldnt connect to API
             }
-            //Set State to inactive
+            //Set State to inactive and reenable button
             status = State.Inactive;
             Application.Current.Dispatcher.Invoke(() => _main.ChangeStatusMessage("Ready"));
             Application.Current.Dispatcher.Invoke(() => _main.GenerateButton.IsEnabled = true);
@@ -186,7 +185,10 @@ namespace  AI_UI{
             while (status == State.Active) {
                 CheckProgress(observerClient);
                 Thread.Sleep(500);
-            } Application.Current.Dispatcher.Invoke(() => _main.ChangeProgressbar(0));
+            }
+            _main.ChangeProgressbar(100); //Set Statusbar to full when we're done (as this might not be done with a 500ms interval on observer)
+            Thread.Sleep(1000); // Wait one second before we reset the progressbar
+            Application.Current.Dispatcher.Invoke(() => _main.ChangeProgressbar(0));
         }
 
         /// <summary>
@@ -198,7 +200,6 @@ namespace  AI_UI{
                 Application.Current.Dispatcher.Invoke(() => Controller.WriteToLog("Requesting Progress"));
                 var response = await client.GetAsync("http://127.0.0.1:7860/sdapi/v1/progress");
                 string responseString = await response.Content.ReadAsStringAsync();
-                //Dispatcher.Invoke(() => log.WriteToLog("Progress Response Received: " + responseString));
                 ProgressStruct progressStruct = JsonSerializer.Deserialize<ProgressStruct>(responseString);
                 double progressInPercent = progressStruct.progress * 100;
                 Application.Current.Dispatcher.Invoke(() => Controller.WriteToLog("Progress Response Received: " + progressInPercent.ToString()));

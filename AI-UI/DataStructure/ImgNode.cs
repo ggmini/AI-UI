@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using AI_UI;
@@ -40,7 +39,7 @@ namespace Data_Structure {
         }
 
         /// <summary>
-        /// Find all Children
+        /// Find all Children, to be run when creating node from nodestruct
         /// </summary>
         public void FindChildren() {
             foreach(int id  in childrenIds)

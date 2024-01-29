@@ -12,13 +12,13 @@ using System.Windows.Media;
 namespace Data_Structure {
     public static class ImgTree {
 
-        private static ImgNode start;
-        private static int countNodeId = 0;
-        private static int countImgId = 0;
-        private static ImgNode currentNode;// set via onClick
+        private static ImgNode start; //Root Node
+        private static int countNodeId = 0; //ID for next Node
+        private static int countImgId = 0; //ID for next Img
+        private static ImgNode currentNode; //Currently selected node
         private static string currentTreeName;
         public static string CurrentTreeName { get => currentTreeName; }
-        private static List<ImgNode> nodes;
+        private static List<ImgNode> nodes; //List of current Nodes
         public static List<ImgNode> Nodes { get => nodes; }
 
         /// <summary>
@@ -53,9 +53,8 @@ namespace Data_Structure {
                 nodeInfo = sr.ReadLine();
             }
             sr.Close();
-            foreach(ImgNode node in nodes) {
-                node.FindChildren();
-            }
+            foreach(ImgNode node in nodes)
+                node.FindChildren(); //Add Children to their parent nodes (right now Nodes only have the children IDs)
             start = nodes[0];
             currentNode = start;
         }
@@ -95,7 +94,7 @@ namespace Data_Structure {
                 };
                 ImgNode node = new ImgNode(countNodeId++, nodeInfo);
                 Controller.WriteToLog("Node Id Increased to " + countNodeId);
-                InsertItem(node);
+                InsertItem(node); //Current Node is automatically moved
             }
             //Save Images to node
             for (int i = 0; i < batchInfo.batch_size; i++) {

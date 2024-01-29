@@ -1,8 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     >
-    <!-- This Style redefines the ControlTemplate used by TreeViewItems and
-         also provides a different itemspanel for their child items. -->
+    <!-- Style to make the Tree View look more like a tree -->
     <Style TargetType="TreeViewItem">
         <Setter Property="Template">
             <Setter.Value>
@@ -17,14 +16,13 @@
 
                         <!-- This Border and ContentPresenter displays the content of the TreeViewItem. -->
                         <Border Name="Bd" 
-              Background="#006A8B"
-              CornerRadius="8"
-              Padding="6"
-              >
+                                Background="#006A8B"
+                                CornerRadius="8"
+                                Padding="6">
                             <ContentPresenter Name="PART_Header"                  
-                ContentSource="Header"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center" />
+                                              ContentSource="Header"
+                                              HorizontalAlignment="Center"
+                                              VerticalAlignment="Center" />
                         </Border>
 
                         <!-- The ItemsPresenter displays the item's children. -->
@@ -32,8 +30,7 @@
                     </Grid>
 
                     <ControlTemplate.Triggers>
-                        <!--When the item is selected in the TreeView, use the 
-                  "selected" colors and give it a drop shadow. -->
+                        <!--When the item is selected in the TreeView, change the color. -->
                         <Trigger Property="IsSelected" Value="True">
                             <Setter
                                 TargetName="Bd"
@@ -42,16 +39,14 @@
                             <Setter
                                 TargetName="Bd"
                                 Property="TextElement.Foreground"                   
-                                Value="{DynamicResource 
-                                  {x:Static SystemColors.HighlightTextBrushKey}}" />
+                                Value="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
 
-        <!-- Make each TreeViewItem show it's children 
-           in a horizontal StackPanel. -->
+        <!-- Make each TreeViewItem show it's children in a horizontal StackPanel. -->
         <Setter Property="ItemsPanel">
             <Setter.Value>
                 <ItemsPanelTemplate>
