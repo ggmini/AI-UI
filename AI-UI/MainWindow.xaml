@@ -147,9 +147,6 @@
                     </Path>
                     <!--#endregion-->
 
-                    <Image Source="{StaticResource AI-UI_logo}" Height="112" Width="113" Canvas.Left="19" Canvas.Top="28" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                    <Image Source="{StaticResource dice}" Height="30" Width="30" Canvas.Left="592" Canvas.Top="496" HorizontalAlignment="Left" VerticalAlignment="Top" IsHitTestVisible="False"/>
-                    <Image Source="{StaticResource Zahnrad}" Height="23" Width="23" Canvas.Left="23" Canvas.Top="1030" HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
 
                     <!--#region Text, Buttons and Sliders-->
@@ -285,6 +282,9 @@
                     <TextBlock Text="go back" FontFamily="/AI-UI;component/Fonts/Dosis-Regular.ttf#Dosis-Regular" Foreground="#B1D4DF" FontSize="20" Height="24" Canvas.Left="45" Canvas.Top="365" HorizontalAlignment="Left" VerticalAlignment="Center" Width="105" IsHitTestVisible="False"/>
                     <!--#endregion-->
 
+                    <Image Source="{StaticResource AI-UI_logo}" Height="112" Width="113" Canvas.Left="19" Canvas.Top="28" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <Image Source="{StaticResource dice}" Height="30" Width="30" Canvas.Left="592" Canvas.Top="496" HorizontalAlignment="Left" VerticalAlignment="Top" IsHitTestVisible="False"/>
+                    <Image Source="{StaticResource Zahnrad}" Height="23" Width="23" Canvas.Left="23" Canvas.Top="1030" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                     <!--#endregion-->
                 </Canvas>
             </Viewbox>
