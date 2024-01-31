@@ -75,6 +75,12 @@ namespace  AI_UI{
             worker.RunWorkerAsync(requestStruct);
         }
 
+        /// <summary>
+        /// Merge Prompts of 2 generated Images
+        /// </summary>
+        /// <param name="prompt1">Prompt of first selected Image</param>
+        /// <param name="prompt2">Prompt of second selected Image</param>
+        /// <returns>Merged prompt</returns>
         public static string MergePrompts(string prompt1, string prompt2)
         {
             return $"({prompt1}:1), ({prompt2}:0.00000001)";

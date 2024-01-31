@@ -130,21 +130,23 @@ namespace Data_Structure {
             File.WriteAllText($"output\\{currentTreeName}\\tree.txt", outputString);
         }
 
-
+        /// <summary>
+        /// Populates the visual tree on the UI
+        /// </summary>
         public static void PopulateTreeView()
         {
             Application.Current.Dispatcher.Invoke((Action)delegate
             {
+                //Access visual tree from MainWindow
                 MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
-
                 TreeView treeView = mainWindow.treeView;
 
                 treeView.Items.Clear();
 
-                List<ImgNode> addedNodes = new List<ImgNode>();
-
-                foreach (var node in ImgTree.Nodes)
+                List<ImgNode> addedNodes = new List<ImgNode>(); //used to keep track of added nodes
+                foreach (var node in Nodes)
                 {
+                    //If not already existing, creates new Node and adds it to the visual tree
                     if (!addedNodes.Contains(node))
                     {
                         TreeViewItem treeNode = CreateTreeViewItem(node, addedNodes);
@@ -154,14 +156,22 @@ namespace Data_Structure {
             });
         }
 
+        /// <summary>
+        /// Helps PopulateTreeView by creating new Nodes represented by TreeViewItems
+        /// </summary>
+        /// <param name="node">node currently handled by iteration in PopulateTreeView</param>
+        /// <param name="addedNodes">all nodes currently added to the visual tree while iterating Nodes</param>
+        /// <returns></returns>
         public static TreeViewItem CreateTreeViewItem(ImgNode node, List<ImgNode> addedNodes)
         {
             StackPanel stackPanel = new StackPanel { Orientation = Orientation.Horizontal };
+            //Get first image created by prompt of this node to represent node
             Image image = new Image {
                 Source = new BitmapImage(new Uri(Path.GetFullPath($"output\\{currentTreeName}\\{node.imgId[0]}.png"))),
                     Height = 100
             };
             stackPanel.Children.Add(image);
+            //Show number of further images created by prompt of this node
             if (node.imgId.Count > 1) stackPanel.Children.Add(new TextBlock { Text = $"+{node.imgId.Count - 1}", FontSize = 36,
                 VerticalAlignment = VerticalAlignment.Center, Foreground = new SolidColorBrush(Colors.White), Margin = new Thickness(10, 0, 10, 0) });
             TreeViewItem treeNode = new TreeViewItem() { Header = stackPanel, Tag = node.nodeId.ToString(), IsExpanded = true };
@@ -172,28 +182,7 @@ namespace Data_Structure {
 
             addedNodes.Add(node);
 
-
-
-            /*foreach (var item in node.imgId)
-            {
-                //// Image:
-
-                Image image = new Image {
-                    Source = new BitmapImage(new Uri(Path.GetFullPath($"output\\{currentTreeName}\\{node.nodeId}.png"))), //(ToDo: Image-path must be retreived)
-                    Height = 20
-                };
-
-                //// StackPanel to hold the TextBlock and Image
-                StackPanel stackPanel = new StackPanel { Orientation = Orientation.Horizontal };
-                //// TextBlock for the header text
-                TextBlock textBlock = new TextBlock { Text = $"Item {item}" };
-
-                stackPanel.Children.Add(textBlock);
-                stackPanel.Children.Add(image);
-
-                treeNode.Items.Add(new TreeViewItem { Header = stackPanel, Tag = item.ToString() });
-            }*/
-
+            //Create child nodes for each node derived from parent node's prompt
             foreach (var childNode in node.children)
             {
                 TreeViewItem childTreeNode = CreateTreeViewItem(childNode, addedNodes);
@@ -203,15 +192,17 @@ namespace Data_Structure {
             return treeNode;
         }
 
+        /// <summary>
+        /// Click-Event for Node (calls SelectNode)
+        /// </summary>
         private static void TreeViewItem_MouseUp(object sender, MouseButtonEventArgs e)
         {
             if (sender is TreeViewItem treeViewItem)
             {
                 string headerText = treeViewItem.Tag.ToString();
-                // Logik
                 SelectNode(treeViewItem);
 
-                // if-else just for testing
+                // if-else just for logging
                 if (headerText != null) {
                     Controller.WriteToLog("Selecting Node: " + headerText);
                 }
@@ -221,6 +212,33 @@ namespace Data_Structure {
             }
         }
 
+        /// <summary>
+        /// Right-Click-Event for Node (calls SelectNodeRight)
+        /// </summary>
+        private static void TreeViewItem_MouseLeft(object sender, MouseButtonEventArgs e)
+        {
+            if (sender is TreeViewItem treeViewItem)
+            {
+                string headerText = treeViewItem.Tag.ToString();
+                SelectNode(treeViewItem);
+
+                // if-else just for logging
+                if (headerText != null)
+                {
+                    Controller.WriteToLog("Selecting Node for Merging: " + headerText);
+                }
+                else
+                {
+                    Controller.WriteToLog("no HeaderText found");
+                }
+            }
+        }
+
+        /// <summary>
+        /// Double-Click-Event for Node (calls SelectNode and OpenNode to view all Images of the node)
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private static void TreeViewItem_MouseDouble(object sender, MouseEventArgs e) {
             if (sender is TreeViewItem treeViewItem) {
                 SelectNode(treeViewItem);
@@ -230,7 +248,12 @@ namespace Data_Structure {
             }
         }
 
-        public static ImgNode SelectNode(TreeViewItem treeViewItem)// set via onClick
+        /// <summary>
+        /// Selects node when called by one of it's two Click-Events and adds it's nodeInfo to the UI's input elements
+        /// </summary>
+        /// <param name="treeViewItem">TreeViewItem clicked on</param>
+        /// <returns>Selected node</returns>
+        public static ImgNode SelectNode(TreeViewItem treeViewItem)
         {
             string searchedIdString = "0";
             if (treeViewItem.Tag is string s)
@@ -238,29 +261,14 @@ namespace Data_Structure {
                 searchedIdString = s;
             }
             int searchedId = int.Parse($"{searchedIdString}");
-            // wohl besser mit try catch
-            //if (currentNode != null && nodeId >= 0 && nodeId < nodes.Count)
-            //{
+
             try{ 
             currentNode = nodes[searchedId];
 
             Application.Current.Dispatcher.Invoke((Action)delegate
             {
                 MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
-
-                //if (mainWindow.PromptBox.Text == "Prompt")
-                //{
-                //    mainWindow.PromptBox.Text = $"{currentNode.nodeInfo.prompt}";
-                //    mainWindow.NegativePromptBox.Text = $"{currentNode.nodeInfo.negative_prompt}";
-                //}
-                //else
-                //{
-                //    mainWindow.PromptBox2.Text = $"{currentNode.nodeInfo.prompt}";
-                //    mainWindow.NegativePromptBox2.Text = $"{currentNode.nodeInfo.negative_prompt}";
-                //}
-                //mainWindow.WidthBox.Text = $"{currentNode.nodeInfo.width}";
-                //mainWindow.HeightBox.Text = $"{currentNode.nodeInfo.height}";
- 
+                
                 mainWindow.PromptBox.Text = $"{currentNode.nodeInfo.prompt}";
                 mainWindow.NegativePromptBox.Text = $"{currentNode.nodeInfo.negative_prompt}";
                 mainWindow.SeedBox.Value = -1; //During demo users seemed to generate the same image multiple times.
@@ -270,6 +278,41 @@ namespace Data_Structure {
 
                         
             return currentNode;
+            }
+            catch (Exception ex) { return null; }
+        }
+
+        /// <summary>
+        /// Selects node for merging ("img2" on UI) when called by it's Right-Click-Event and adds it's nodeInfo to the UI's input elements
+        /// </summary>
+        /// <param name="treeViewItem">TreeViewItem clicked on</param>
+        /// <returns>Selected node</returns>
+        public static ImgNode SelectNodeRight(TreeViewItem treeViewItem)
+        {
+            string searchedIdString = "0";
+            if (treeViewItem.Tag is string s)
+            {
+                searchedIdString = s;
+            }
+            int searchedId = int.Parse($"{searchedIdString}");
+
+            try
+            {
+                currentNode = nodes[searchedId];
+
+                Application.Current.Dispatcher.Invoke((Action)delegate
+                {
+                    MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
+
+                    mainWindow.PromptBox2.Text = $"{currentNode.nodeInfo.prompt}";
+                    mainWindow.NegativePromptBox2.Text = $"{currentNode.nodeInfo.negative_prompt}";
+                    mainWindow.SeedBox.Value = -1; //During demo users seemed to generate the same image multiple times.
+                    mainWindow.WidthBox.Text = $"{currentNode.nodeInfo.width}";
+                    mainWindow.HeightBox.Text = $"{currentNode.nodeInfo.height}";
+                });
+
+
+                return currentNode;
             }
             catch (Exception ex) { return null; }
         }

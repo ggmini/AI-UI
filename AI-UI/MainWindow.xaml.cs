@@ -107,7 +107,9 @@ namespace AI_UI {
             Close();
         }
 
-
+        /// <summary>
+        /// Clears default text from textbox on clicking
+        /// </summary>
         private void TextBox_GotFocus(object sender, RoutedEventArgs e)
         {
             TextBox textBox = (TextBox)sender;
@@ -118,6 +120,9 @@ namespace AI_UI {
             }
         }
 
+        /// <summary>
+        /// Rewrites default text into textbox on leaving whilst still empty
+        /// </summary>
         private void TextBox_LostFocus(object sender, RoutedEventArgs e)
         {
             TextBox textBox = (TextBox)sender;
@@ -184,11 +189,6 @@ namespace AI_UI {
 
         void BackToTreeButton_Click(object sender, RoutedEventArgs e) {
             CloseNode();
-        }
-
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
         }
     }
 }
