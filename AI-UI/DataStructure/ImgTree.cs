@@ -261,8 +261,9 @@ namespace Data_Structure {
                 //mainWindow.WidthBox.Text = $"{currentNode.nodeInfo.width}";
                 //mainWindow.HeightBox.Text = $"{currentNode.nodeInfo.height}";
  
-                    mainWindow.PromptBox.Text = $"{currentNode.nodeInfo.prompt}";
-                    mainWindow.NegativePromptBox.Text = $"{currentNode.nodeInfo.negative_prompt}";
+                mainWindow.PromptBox.Text = $"{currentNode.nodeInfo.prompt}";
+                mainWindow.NegativePromptBox.Text = $"{currentNode.nodeInfo.negative_prompt}";
+                mainWindow.SeedBox.Value = -1; //During demo users seemed to generate the same image multiple times.
                 mainWindow.WidthBox.Text = $"{currentNode.nodeInfo.width}";
                 mainWindow.HeightBox.Text = $"{currentNode.nodeInfo.height}";
             });
