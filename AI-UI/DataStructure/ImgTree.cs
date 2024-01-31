@@ -178,6 +178,7 @@ namespace Data_Structure {
 
             //These Events execute for all parent nodes as well...this element executes last so it's still working as intended
             treeNode.PreviewMouseLeftButtonDown += TreeViewItem_MouseUp;
+            treeNode.PreviewMouseRightButtonDown += TreeViewItem_MouseRight;
             treeNode.PreviewMouseDoubleClick += TreeViewItem_MouseDouble;
 
             addedNodes.Add(node);
@@ -215,12 +216,12 @@ namespace Data_Structure {
         /// <summary>
         /// Right-Click-Event for Node (calls SelectNodeRight)
         /// </summary>
-        private static void TreeViewItem_MouseLeft(object sender, MouseButtonEventArgs e)
+        private static void TreeViewItem_MouseRight(object sender, MouseButtonEventArgs e)
         {
             if (sender is TreeViewItem treeViewItem)
             {
                 string headerText = treeViewItem.Tag.ToString();
-                SelectNode(treeViewItem);
+                SelectNodeRight(treeViewItem);
 
                 // if-else just for logging
                 if (headerText != null)
