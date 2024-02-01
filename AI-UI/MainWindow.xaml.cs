@@ -136,21 +136,34 @@ namespace AI_UI {
 
 
         #region ImageViewer
+        //Variables for Image Viewer
         List<BitmapImage> imgs;
         List<ResponseStruct.imgInfo> imgInfos;
         int currentImage = 0;
 
+        /// <summary>
+        /// Open Image Viewer
+        /// </summary>
+        /// <param name="node">Node to Open</param>
         public void OpenNode(ImgNode node) {
             ImageGrid.Visibility = Visibility.Visible;
             TreeGrid.Visibility = Visibility.Hidden;
             LoadNode(node);
         }
 
-        public void CloseNode() {
+        /// <summary>
+        /// Ckises The Image Viewer
+        /// </summary>
+        public void CloseNode()
+        {
             ImageGrid.Visibility = Visibility.Hidden;
             TreeGrid.Visibility = Visibility.Visible;
         }
 
+        /// <summary>
+        /// Load Selected Node
+        /// </summary>
+        /// <param name="node">Node to load into image viewer</param>
         void LoadNode(ImgNode node) {
             imgs = new List<BitmapImage>();
             imgInfos = new List<ResponseStruct.imgInfo>();
@@ -165,6 +178,9 @@ namespace AI_UI {
             LoadImage();
         }
 
+        /// <summary>
+        /// Load Image into view
+        /// </summary>
         void LoadImage() {
             ImageView.Source = imgs[currentImage];
             ResponseStruct.imgInfo imgInfo = imgInfos[currentImage];
@@ -172,6 +188,9 @@ namespace AI_UI {
                 $"Resolution: {imgInfo.width}x{imgInfo.height}\nDenoising Strength: {imgInfo.denoising_strength}";
         }
 
+        /// <summary>
+        /// Move to next image
+        /// </summary>
         void NextClick(object sender, RoutedEventArgs e) {
             if (currentImage == imgs.Count - 1) //Are we on the last image
                 currentImage = 0; //Skip back to front
@@ -179,6 +198,9 @@ namespace AI_UI {
             LoadImage();
         }
 
+        /// <summary>
+        /// Move to last Image
+        /// </summary>
         void BackClick(object sender, RoutedEventArgs e) {
             if (currentImage == 0) //Are we on the firsrt image
                 currentImage = imgs.Count - 1; //Skip back to back
@@ -187,6 +209,9 @@ namespace AI_UI {
         }
         #endregion
 
+        /// <summary>
+        /// Close Image Viewer
+        /// </summary> 
         void BackToTreeButton_Click(object sender, RoutedEventArgs e) {
             CloseNode();
         }
