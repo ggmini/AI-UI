@@ -18,13 +18,18 @@ namespace AI_UI {
         /// Retrieve all existing trees from output folder
         /// </summary>
         void PopulateList() {
-            string[] directories = Directory.GetDirectories("output");
-            foreach (string dir in directories) {
-                if (File.Exists($"{dir}\\tree.txt")) {
-                    string name = dir.Remove(0, 7); //We only want to display the tree name in the UI so we need to remove "output\" from the string
-                    TreeList.Items.Add(name);
+            try {
+                string[] directories = Directory.GetDirectories("output");
+                foreach (string dir in directories)
+                {
+                    if (File.Exists($"{dir}\\tree.txt"))
+                    {
+                        string name = dir.Remove(0, 7); //We only want to display the tree name in the UI so we need to remove "output\" from the string
+                        TreeList.Items.Add(name);
+                    }
                 }
             }
+            catch (DirectoryNotFoundException) { } //Output Directory does not exist (yet) -> Obviously no trees exist
         }
 
         /// <summary>
