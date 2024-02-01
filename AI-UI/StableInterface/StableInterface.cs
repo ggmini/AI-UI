@@ -192,7 +192,7 @@ namespace  AI_UI{
                 CheckProgress(observerClient);
                 Thread.Sleep(500);
             }
-            _main.ChangeProgressbar(100); //Set Statusbar to full when we're done (as this might not be done with a 500ms interval on observer)
+            Application.Current.Dispatcher.Invoke(() => _main.ChangeProgressbar(100)); //Set Statusbar to full when we're done (as this might not be done with a 500ms interval on observer)
             Thread.Sleep(1000); // Wait one second before we reset the progressbar
             Application.Current.Dispatcher.Invoke(() => _main.ChangeProgressbar(0));
         }
